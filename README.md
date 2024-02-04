@@ -28,9 +28,9 @@ The assessment is comprised of the following items:
   
 # Contacts
 
-The day and time for _appointments_ is Wednesday afternoon. Please email me the
+The day and time for appointments is Wednesday afternoon. Please email me the
 day before if you wish to meet. If you prefer you can also send an email with
-your questions to [Renato Neves](mailto:nevrenato@di.uminho.pt), or we can have
+your questions to [me](mailto:nevrenato@di.uminho.pt), or we can have
 an online meeting.
 
 # Bibliography
