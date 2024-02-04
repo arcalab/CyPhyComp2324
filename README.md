@@ -21,6 +21,13 @@ concurrent algorithms.
   | ----------   |------------ |
   | 05 feb. 2023 | Introduction to the module and its logistics ([slides](introSlides/intro.pdf)) |
 
+
+
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
+
 # Assessment
 
 The assessment is comprised of the following items:
