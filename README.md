@@ -1,60 +1,37 @@
 # Introduction and objectives
 
-Welcome to the webpage of the course "Cyber-Physical Computation", edition
-2023/2024.
-
 Cyber-physical systems are networks of computational devices that closely
 interact with physical processes in order to reach a prescribed goal; for
-example a desired velocity, a desired temperature or, more generally, a desired
-energy level. They range from small medical devices, such as pacemakers and
-insulin pumps, to networks of autonomous vehicles and district-wide smart
-grids. This course is devoted to such systems.
+example a desired velocity, temperature or, more generally, an energy level.
+They range from small medical devices, such as pacemakers and insulin pumps, to
+networks of autonomous vehicles and district-wide smart grids. This course is
+devoted to such systems.
 
-The main learning goal is two-fold: 1) to prepare the student to a
-*disciplined* way of developing and analysing cyber-physical systems,
-by presenting their *basic principles*, adequate *models of
-computation*, and respective *tools*; 2) and to introduce the student
-to the main limitations of the area's state-of-the-art 
--- via pedagogical illustrations extracted from real world-scenarios
-involving e.g. cruise controllers, sampling algorithms, and timed
-variants of concurrent algorithms.
+Our main goal is to make the student an adept of the engineering discipline of
+cyber-physical systems -- by presenting the respective *basic principles*,
+*computational models*, *tools*, and *current limitations*. The course will
+involve several pedagogical illustrations extracted from real world-scenarios
+involving e.g.  cruise controllers, sampling algorithms, and timed variants of
+concurrent algorithms.
 
-At the end of the module, the student will:
 
-+ know the basic principles and representative models of
-  cyber-physical computation;
-+ have a broad knowledge of languages, tools, and techniques for
-  engineering cyber-physical systems;
-+ be proficient with the tools [Uppaal]([http://www.uppaal.org/]) and [Lince]([http://arcatools.org/assets/index.html#arcatools]), which cover model
-  checking, testing, and simulation for cyber-physical systems;
-+ be able to understand in which ways the state-of-the-art (of
-  cyber-physical computation and engineering) is limited, and 
-  the potential outcomes of solving these limitations.
-
-# Syllabus
-
-+ Labelled transition systems, their role as semantic objects, and
-  corresponding notions of equivalence;
-+ Timed labelled transition systems and corresponding notions of
-  equivalence, composition, and synchronisation. Zeno behaviour;
-+ From theory to practice: the tool [Uppaal]([http://www.uppaal.org/]);
-+ A while-language and its operational semantics;
-+ A hybrid while-language and its operational semantics;
-+ From theory to practice: the tool [Lince]([http://arcatools.org/assets/index.html#arcatools]);
-+ Cyber-physical behaviour as yet another computational effect: the
-  notion of a monad, the hybrid monad, and monad combination.
-  
 # Summaries
 
-  - __05 feb. 2023__ – Introduction to the module and its dynamics ([slides](introSlides/intro.pdf))
-
+  | 05 feb. 2023 | Introduction to the module and its logistics ([slides](introSlides/intro.pdf)) |
 # Assessment
 
-Assessment consist of the following items:
+The assessment is comprised of the following items:
 
-+ Two individual sets of exercises to do at home (30%). 
-+ Two group assignments (70%);
++ Two individual sets of exercises to do at home (30%)
++ Two group assignments (70%)
   
+# Contacts
+
+The day and time for _appointments_ is Wednesday afternoon. Please email me the
+day before if you wish to meet. If you prefer you can also send an email with
+your questions to [Renato Neves](mailto:nevrenato@di.uminho.pt), or we can have
+an online meeting.
+
 # Bibliography
 
 <p><a name="alur1994theory"></a>
@@ -125,9 +102,3 @@ Chucky Ellison and Grigore Rosu.
  <a href="http://www.lri.fr/~filliatr/bibtex2html/">bibtex2html</a> 1.99.</em></p> -->
 
 
-# Contact
-
-The day and time for _appointments_ is Wednesday afternoon. Please email me the
-day before if you wish to meet. If you prefer you can also just send an email
-with your questions to [Renato Neves](mailto:nevrenato@di.uminho.pt), or we can
-try to book an online meeting.
