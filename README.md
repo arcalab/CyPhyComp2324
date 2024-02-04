@@ -16,6 +16,7 @@ concurrent algorithms.
 
 
 # Summaries
+
   | Date         | Description |
   | ----------   |------------ |
   | 05 feb. 2023 | Introduction to the module and its logistics ([slides](introSlides/intro.pdf)) |
