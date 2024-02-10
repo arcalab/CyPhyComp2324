@@ -292,9 +292,9 @@
   \begin{minipage}[0.3\textheight]{\textwidth}
   \begin{columns}[c]
   \begin{column}{0.62\textwidth}
-    With the syntax and semantics of CCS now in place, we may put on
-    our working hats and start to (formally) analyse
-    \alert{communication} and \alert{synchronisation} mechanisms
+    With the syntax and semantics of CCS now in place, we put on
+    our working hats and start to \alert{formally} analyse
+    communication and synchronisation mechanisms
   \end{column}
   \begin{column}{0.28\textwidth}
     \includegraphics[scale=0.1]{images/mad-hatter.png}
@@ -302,50 +302,48 @@
   \end{columns}
   \end{minipage}
 \end{frame}
-%
-%
-%\begin{frame}{Mutual Exclusion in CCS}
-%  We define three recursive processes
-%  \begin{flalign*}
-%    S & = \prog{rec}\, X.\ \overline{start} . finish . X & \qquad \quad (\text{the semaphore})\\
-%    P_1 & = \prog{rec}\, Y.\ start . a_1  . b_1. \overline{finish} . Y &\qquad (\text{process 1}) \\
-%    P_2 & = \prog{rec}\, Z.\ start . a_2  . b_2. \overline{finish} . Z &\qquad (\text{process 2})
-%  \end{flalign*}
-%  and then write down $(S \parallel P_1 \parallel P_2) \backslash \{ start, finish \}$
-%
-%  \vfill
-%  \alert{Question:} will we ever observe a sequence of
-%  actions $x_1 \dots x_n \dots$ such that $x_i = \tikzmark{cr1} a_1 \tikzmark{cr2}$ and $x_{i + 1} = a_2$?
-%  \begin{tikzpicture}[overlay,remember picture,
-%     box/.style = {rounded corners},
-%     pin edge={-Stealth,thick, red}]
-%     \coordinate (ss1) at ($({pic cs:cr1})+(+0.5ex, 1.5ex)$);
-%     \coordinate (ss2) at ($({pic cs:cr2})+(-0.5ex,-0.5ex)$);
-%     \node[semitransparent, 
-%           fit=(ss1) (ss2),
-%           pin=below:\tiny{think of $a_i$ as writing on a critical region and of $b_i$
-%           as ending this process}]  {};
-%  \end{tikzpicture}
-%
-%\end{frame}
-%
-%\begin{frame}{Dining Philosophers Problem}
-%  Two philosophers are sitting at the table in front of each other
-%  \dots thinking \dots
-%
-%  At some point, they will wish to eat and for that effect there are
-%  precisely \alert{two forks} on the table, at their left and
-%  right-hand sides
-%
-%  When Philosopher 1 wishes to eat he first picks the fork on his left
-%  and then the one on his right
-%
-%  Philosopher 2 picks first the fork on her left and then the fork on her right
-%
-%  \vfill
-%  Write down this system in CCS and discover whether it is possible that both philosophers
-%  die of starvation
-%\end{frame}
+
+
+\begin{frame}{Mutual Exclusion in CCS}
+  We define three recursive processes
+  \begin{flalign*}
+    S & = \mathtt{rec}\, X.\ \overline{start} . finish . X & \qquad \quad (\text{the semaphore})\\
+    P_1 & = \mathtt{rec}\, Y.\ start . a_1  . b_1. \overline{finish} . Y &\qquad (\text{process 1}) \\
+    P_2 & = \mathtt{rec}\, Z.\ start . a_2  . b_2. \overline{finish} . Z &\qquad (\text{process 2})
+  \end{flalign*}
+  and then write down $(S \parallel P_1 \parallel P_2) \backslash \{ start, finish \}$
+
+  Question: will we ever observe a sequence of actions $x_1 \dots x_n \dots$
+  such that $x_i = \tikzmark{cr1} a_1 \tikzmark{cr2}$ and $x_{i + 1} = a_2$?
+  \begin{tikzpicture}[overlay,remember picture,
+     box/.style = {rounded corners},
+     pin edge={-Stealth,thick, red}]
+     \coordinate (ss1) at ($({pic cs:cr1})+(+0.5ex, 1.5ex)$);
+     \coordinate (ss2) at ($({pic cs:cr2})+(-0.5ex,-0.5ex)$);
+     \node[semitransparent, 
+           fit=(ss1) (ss2),
+           pin=below:\tiny{think of $a_i$ as writing on a critical region and of $b_i$
+           as ending this process}]  {};
+  \end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}{Dining Philosophers Problem}
+  Two philosophers sitting at the table in front of each other \dots thinking
+  \dots
+
+  They will wish to eat and for that effect there are precisely \alert{two
+  forks} on the table, at their left and right-hand sides
+
+  When Philosopher 1 wishes to eat he picks the fork on his left and then the
+  one on his right
+
+  Phil. 2 picks the fork on her left and then the fork on her right
+
+  \vfill
+  Write down this system in CCS and discover whether it is possible that both philosophers
+  die of starvation
+\end{frame}
 %
 %\section{Observational equivalence}
 %
