@@ -1,0 +1,556 @@
+\documentclass{beamer}
+\usepackage{etex} % fixes new-dimension error
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+%-------------- template --------------------------------------------------
+\usetheme{metropolis}
+\metroset{block=fill}
+%\usetheme{Boadilla}
+
+% Configuring the foot line
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.4\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertsection
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+% No configuration symbols
+\setbeamertemplate{navigation symbols}{}
+%----------------------------------------------------------------------------
+\usepackage{graphicx,amsmath}
+\usepackage{stmaryrd} % cf. interleave
+\usepackage{booktabs}
+\usepackage{amscd}
+\usepackage{multicol}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{alltt}
+\usepackage{proof}
+\usepackage{subcaption}
+\usepackage[all]{xy}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc, fit, tikzmark}
+\usepackage{pgfplots}
+\usepackage{listings}
+% \usepackage{textcomp}
+% \usepackage{tikz-cd}
+% \usepackage[new]{old-arrows}
+% \usepackage[all]{xy}
+
+%------ using pstricks (rnode etc) ------------------------------------------
+\usepackage{pstricks,pst-node,pst-text,pst-3d}
+% ------ using color ---------------------------------------------------------
+\newrgbcolor{goldenrod}{.80392 .60784 .11373}
+\newrgbcolor{darkgoldenrod}{.5451 .39608 .03137}
+\newrgbcolor{brown}{.15 .15 .15}
+\newrgbcolor{darkolivegreen}{.33333 .41961 .18431}
+\def\gold#1{{\goldenrod #1}}
+\def\dgold#1{{\alert{#1}}}
+\def\dkb#1{{\blue #1}}
+\def\tdkb#1{\textbf{\darkblue #1}}
+\def\gre#1{{\darkolivegreen #1}}
+\def\gry#1{{\gray #1}}
+\def\rdb#1{{\red #1}}
+% ----------------------------------------------------------------------------
+
+% context
+\AtBeginSection[]
+{
+    \begin{frame}
+        \frametitle{Table of Contents}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+\author[Renato Neves]{Renato Neves}
+% logos of institutions
+\titlegraphic{
+  \begin{textblock*}{5cm}(6.7cm,7.59cm)
+     \includegraphics[scale=0.054]{images/uminho.png}\hspace*{.85cm}~%
+  \end{textblock*}
+  \begin{textblock*}{5cm}(9.4cm,7.57cm)
+    \includegraphics[scale=0.50]{images/haslab.pdf}
+  \end{textblock*}
+}
+% No date
+\date{}
+
+\input{macros}
+\begin{document}
+
+\title{Calculus of Communicating Systems}
+
+\frame[plain]{\titlepage}
+
+\section{Syntax and Semantics of Programming}
+
+\begin{frame}{A sprinkle of linguistics}
+  We will often face two linguistic concepts that every programmer
+  ought to know
+  \begin{itemize}
+  \item syntax - determines whether a sentence
+    is valid or not
+  \item semantics - the meaning of valid sentences
+  \end{itemize}
+
+  \vfill
+  \begin{example}[syntax]
+      The sentence (program) $\mathtt{x := p\, ;q}$ is forbidden by
+      the syntactic rules of most programming languages
+    \end{example}
+  \begin{example}[semantics]
+      The sentence (program) $\mathtt{x := 1}$ has the meaning ``writes
+      \texttt{1} in the memory address corresponding to \texttt{x}''
+  \end{example}
+\end{frame}
+
+\begin{frame}{The need for semantics in programming}
+
+  How can one prove that a program does what is supposed to do if its
+  semantics (i.e. its meaning) is not established \emph{a priori}?
+
+  \vfill
+  \begin{examples}
+    What are the outputs of the following programs?
+    \begin{itemize}
+            \item $f()\{ \mathtt{print}\ a\ ; \mathtt{ret.\ 1} \} ;\
+                g()\{ \mathtt{print}\ b\ ; \mathtt{ret.\ 0} \};\
+                f()\ \mathtt{or}\ g()$ 
+            \item $x:=2\ ; (x := x + 1 \parallel  x := 0)$ 
+            \item $(a:= 1\, ; \mathtt{print}\ b) \parallel 
+                    (b:= 1\, ; \mathtt{print}\ a)$ 
+    \end{itemize}
+  \end{examples}
+
+\end{frame}
+
+\begin{frame}{Transition systems as semantic providers}
+
+  Transition systems are an \alert{ubiquitous mechanism} for defining the
+  semantics of programming languages 
+
+  \vfill
+  Following tradition, we will use them to define the
+  semantics of a simple (but powerful !!) concurrent language ---
+
+  and then base on this learning step to tackle Dijkstra's 
+
+  \vspace{3.5pt}
+  \begin{minipage}[0.3\textheight]{\textwidth}
+  \begin{columns}[c]
+  \begin{column}{0.7\textwidth}
+    Dining Philosophers Problem (\emph{circa} 1965)
+  \end{column}
+  \begin{column}{0.22\textwidth}
+    \includegraphics[scale=1.1]{images/Dijkstra.jpg}
+  \end{column}
+  \end{columns}
+  \end{minipage}
+
+\end{frame}
+
+\section{A Simple Concurrent Language and its Semantics}
+
+\begin{frame}{Calculus of Communicating Systems}
+
+  \begin{minipage}[0.3\textheight]{\textwidth}
+  \begin{columns}[c]
+  \begin{column}{0.8\textwidth}
+    \begin{block}{Syntax}
+      $P,Q ::= X \mid a . P\ |\ \sum_{ i \in I} P_i \ \mid P \parallel Q 
+      \mid P \backslash L$
+    \end{block}
+    (for describing communication and concurrency)
+  \end{column}
+  \begin{column}{0.23\textwidth}
+    \includegraphics[scale=0.25]{images/Milner.jpg}
+  \end{column}
+  \end{columns}
+  \end{minipage}
+  \begin{itemize}
+  \item $X$ is a process name
+  \item $a. P$ \underline{communicates} via channel $a$ and proceeds as $P$
+  \item $\sum_{ i \in I} P_i$ non-deterministic choice between processes $P_i$
+  \item $P \parallel Q$ \underline{parallel composition} 
+          between processes $P$ and $Q$
+  \item $P \backslash L$ makes channels in $L$ private `outside' of $P$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{First Steps with CCS}
+        \begin{block}{Conventions}
+                 \begin{itemize}
+                  \item $\mathtt{0} = \sum_{i \in \emptyset} P_i$ 
+                          (denotes a terminating process)
+                  \item $\bar{a}$ denotes outgoing information via channel $a$ 
+                  \item $\tau$ denotes an invisible action
+                  \end{itemize}
+        \end{block}
+  
+        \begin{examples}[processes in CCS]
+          \begin{itemize}
+                \item $a . \mathtt{0} \parallel \bar{a} . \mathtt{0}$ - two processes
+                        connected via channel $a$; information flows in one direction
+                \item $a . \bar{b} . \mathtt{0} \parallel \bar{a} . b . \mathtt{0}$ -
+                        info. flows in one direction via $a$ and in the inverse
+                        direction via $b$; latter used after $a$ is used 
+                \item $(a . \bar{b} . \mathtt{0} \parallel \bar{a} . b . \mathtt{0})
+                  \backslash \{a,b\}$ - both channels $a,b$ now private
+          \end{itemize}
+        \end{examples}
+\end{frame}
+
+\begin{frame}{First steps with CCS}
+
+  Which of these expressions are valid sentences in CCS?
+
+  \begin{enumerate}
+  \item $a . b . P + Q$
+  \item $a + b$
+  \item $P . a$
+  \item $(P + Q). a$
+  \item $a . \mathtt{0} + b . \mathtt{0}$
+  \item $P . Q$
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{CCS and Cyclic Behaviour}
+  We now add the construct \alert{$\mathtt{rec}\ X.\ P$} to the syntax of CCS -- so that we
+  can describe cyclic behaviour
+
+  \vfill
+  \begin{example}
+    $\mathtt{rec}\ X.\ a . b . X$  - receive communication through $a$ and then
+    through $b$; after that repeat protocol
+  \end{example}
+
+  \begin{example}[the coffee machine and the student]
+    $(\mathtt{rec}\ X.\ coin . \overline{coffee} . X)\ ||\ (\mathtt{rec}\ Y.\
+    \overline{coin} .  coffee . \overline{wrk}. Y)$
+  \end{example}
+
+  \vfill
+  Write down a coffee machine that fails to deliver coffee sometimes
+\end{frame}
+
+\begin{frame}{The Semantics of CCS}
+        Every process yields a transition system
+        according to the rules 
+  \begin{flalign*}
+          \infer[(\textbf{pr})]{a. P \stackrel{a}{\longrightarrow} P}{} \hspace{0.5cm}
+          \infer[(\textbf{ch})]{\sum_{i \in I} P_i \stackrel{a}{\longrightarrow} Q}{P_i \stackrel{a}
+      {\longrightarrow} Q} \hspace{0.5cm}
+      \infer[(\textbf{res}) a,\overline{a} \not \in L]{P \backslash L \stackrel{a}{\longrightarrow}
+      P' \backslash L}{P \stackrel{a}{\longrightarrow} P'} 
+  \end{flalign*}
+  \begin{flalign*}
+          \infer[(\textbf{coml})]{P \parallel Q \stackrel{a}{\longrightarrow} P' \parallel Q}{P
+      \stackrel{a}{\longrightarrow} P'} \hspace{0.8cm}
+      \infer[(\textbf{comr})]{P \parallel Q \stackrel{a}{\longrightarrow} P \parallel Q'}{Q
+      \stackrel{a}{\longrightarrow} Q'} \hspace{0.8cm}
+  \end{flalign*}
+  \begin{flalign*}
+          \infer[(\textbf{com})]{P \parallel Q \stackrel{\tau}{\longrightarrow} P' \parallel Q'}{P
+      \stackrel{a}{\longrightarrow} P' \qquad Q \stackrel{\bar{a}}{\longrightarrow} Q'}
+      \hspace{1cm}
+      \infer[(\textbf{rec})]{\mathtt{rec}\ X.\ P \stackrel{a}{\longrightarrow} P'}{P \tikzmark{ss1}
+      [ \tikzmark{ss2}\mathtt{rec}\ X.\ P / X] 
+      \stackrel{a}{\longrightarrow} P' }
+  \end{flalign*}
+
+  \begin{tikzpicture}[overlay,remember picture,
+     box/.style = {rounded corners},
+     pin edge={-Stealth,thick, red}]
+     \coordinate (ss1) at ($({pic cs:ss1})+(+0.5ex, 1.5ex)$);
+     \coordinate (ss2) at ($({pic cs:ss2})+(-0.5ex,-0.5ex)$);
+     \node[semitransparent, 
+           fit=(ss1) (ss2),
+           pin=below:\tiny{Substitution of $X$ in $P$ by $\mathtt{rec}\ X.\ P$}]  {};
+  \end{tikzpicture}
+\end{frame}
+
+\begin{frame}{First steps with CCS}
+
+  What are the semantics of the following processes?
+
+  \begin{enumerate}
+          \item $a . b . \mathtt{0}$
+          \item $a. b. \mathtt{0} + c. d. \mathtt{0}$
+          \item $a. b. \mathtt{0} \parallel c. d. \mathtt{0}$
+          \item $\mathtt{rec}\ X.\ a. b. X$
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{CCS at work}
+  \begin{minipage}[0.3\textheight]{\textwidth}
+  \begin{columns}[c]
+  \begin{column}{0.62\textwidth}
+    With the syntax and semantics of CCS now in place, we may put on
+    our working hats and start to (formally) analyse
+    \alert{communication} and \alert{synchronisation} mechanisms
+  \end{column}
+  \begin{column}{0.28\textwidth}
+    \includegraphics[scale=0.1]{images/mad-hatter.png}
+  \end{column}
+  \end{columns}
+  \end{minipage}
+\end{frame}
+%
+%
+%\begin{frame}{Mutual Exclusion in CCS}
+%  We define three recursive processes
+%  \begin{flalign*}
+%    S & = \prog{rec}\, X.\ \overline{start} . finish . X & \qquad \quad (\text{the semaphore})\\
+%    P_1 & = \prog{rec}\, Y.\ start . a_1  . b_1. \overline{finish} . Y &\qquad (\text{process 1}) \\
+%    P_2 & = \prog{rec}\, Z.\ start . a_2  . b_2. \overline{finish} . Z &\qquad (\text{process 2})
+%  \end{flalign*}
+%  and then write down $(S \parallel P_1 \parallel P_2) \backslash \{ start, finish \}$
+%
+%  \vfill
+%  \alert{Question:} will we ever observe a sequence of
+%  actions $x_1 \dots x_n \dots$ such that $x_i = \tikzmark{cr1} a_1 \tikzmark{cr2}$ and $x_{i + 1} = a_2$?
+%  \begin{tikzpicture}[overlay,remember picture,
+%     box/.style = {rounded corners},
+%     pin edge={-Stealth,thick, red}]
+%     \coordinate (ss1) at ($({pic cs:cr1})+(+0.5ex, 1.5ex)$);
+%     \coordinate (ss2) at ($({pic cs:cr2})+(-0.5ex,-0.5ex)$);
+%     \node[semitransparent, 
+%           fit=(ss1) (ss2),
+%           pin=below:\tiny{think of $a_i$ as writing on a critical region and of $b_i$
+%           as ending this process}]  {};
+%  \end{tikzpicture}
+%
+%\end{frame}
+%
+%\begin{frame}{Dining Philosophers Problem}
+%  Two philosophers are sitting at the table in front of each other
+%  \dots thinking \dots
+%
+%  At some point, they will wish to eat and for that effect there are
+%  precisely \alert{two forks} on the table, at their left and
+%  right-hand sides
+%
+%  When Philosopher 1 wishes to eat he first picks the fork on his left
+%  and then the one on his right
+%
+%  Philosopher 2 picks first the fork on her left and then the fork on her right
+%
+%  \vfill
+%  Write down this system in CCS and discover whether it is possible that both philosophers
+%  die of starvation
+%\end{frame}
+%
+%\section{Observational equivalence}
+%
+%\begin{frame}{The Quest for Observational Equivalence}
+%
+%  Sometimes we would like to replace a program for another one whose
+%  \alert{behaviour} we \alert{cannot distinguish} from the original
+%
+%  \begin{example}
+%    Why not replace $\prog{rec}\ X.\ a.a.X$ by the simpler process $\prog{rec}\ X.\ a.X$ ?
+%  \end{example}
+%
+%  \vfill
+%  For such substitutions to be sound we require a formal notion of observational equivalence
+%\end{frame}
+%
+%\begin{frame}{Observational Equivalence Informally}
+%
+%  Two programs are observationally equivalent if it is impossible to \alert{observe any
+%  difference} in their \alert{behaviour}
+%
+%  
+%  \vfill
+%  Here behaviour is described in terms of transition systems
+%
+%  \dots\ and therefore behaviour/equivalence needs to be pinned
+%  down to them
+%\end{frame}
+%
+%\begin{frame}{$F$-Transition Systems and Observational Behaviour}
+%  Every functor $F$ induces a notion of observational behaviour
+%
+%  \begin{example}[Moore automata]
+%    Every automaton $X \to A \times X$ induces a map
+%    $\sem{-} : X \to \tikzmark{om1} A^\omega \tikzmark{om2}$
+%  \end{example}
+%
+%  \begin{example}[Deterministic automata]
+%    Every automaton $X \to \prog{Bool} \times X^L$ induces 
+%    $\sem{ - } : X \times L^\ast \to \prog{Bool}$
+%  \end{example}
+%
+%  \vfill
+%  Intuitively $F$ provides a black-box perspective to the transition system \dots
+%
+%  states are not \alert{directly observable}; only their \alert{interaction} with the
+%  environment is
+%  
+%  \begin{tikzpicture}[overlay,remember picture,
+%     box/.style = {rounded corners},
+%     pin edge={-Stealth,thick, red}]
+%     \coordinate (om1) at ($({pic cs:om1})+(+0.5ex, 1.5ex)$);
+%     \coordinate (om2) at ($({pic cs:om2})+(-0.5ex,-0.5ex)$);
+%     \node[semitransparent, 
+%           fit=(om1) (om2),
+%           pin=below:\tiny{Infinite lists over $A$}]  {};
+%  \end{tikzpicture}
+%  
+%\end{frame}
+%
+%\begin{frame}{Question}
+%
+% \begin{equation*}
+%   \xymatrix{
+%     x_1 \ar@{|->}[d] \ar[r] & x_2  \ar[r] \ar@{|->}[d] & x_3  \ar[r] \ar@{|->}[d]
+%     & \cdots & & y\ar@(ur,dr)[] \ar@{|->}[d] \\
+%     a & a & a & && a
+%   }
+% \end{equation*}
+%  
+% \vfill
+% \begin{equation*}
+%   \xymatrix{
+%     & x_1  \ar[ld]_{a}  \ar[rd]^{a} & & & & y \ar[d]_{a}\\
+%     \xybox{(0,0.5)*+[Fo]{\xybox{(0,0.5)*+[Fo]{x_2}}}}  \ar[rr]^{c}
+%     && \xybox{(0,0.5)*+[Fo]{\xybox{(0,0.5)*+[Fo]{x_3}}}} \ar@(ur,dr)[]^{c}  & & &
+%     \xybox{(0,0.5)*+[Fo]{\xybox{(0,0.5)*+[Fo]{z}}}} \ar@(ur,dr)[]^{c}
+%   }
+% \end{equation*}
+%
+% \vfill
+%  Do $x_1$ and $y$ possess the same \alert{observable behaviour} in both cases?
+%
+%\end{frame}
+%
+%\begin{frame}{Just Another Brief Visit to the Field of Coalgebra}
+%
+%  The subject of \alert{systematically} deriving a notion of
+%  observable behaviour from a functor goes beyond this module \dots
+%
+%  \dots\ but you can always ask me about it after the lecture :-)
+%\end{frame}
+%
+%\begin{frame}{$F$-Transition Systems and Observational \underline{Equivalence}}
+%
+%  \begin{definition}
+%    Fix a functor $F$ and consider two transition systems
+%    $f : X \to F X$ and $g : Y \to F Y$. Two states $x \in X$, $y \in Y$
+%    are observationally equivalent if there exists a relation
+%    $R \subseteq X \times Y$ with $(x,y) \in R$ and there exists a
+%    transition system $b : R \to FR$ such that the diagram below commutes
+%    \[
+%      \xymatrix{
+%        X \ar[d]_{f} & \ar[l]_{\pi_1}  R \ar[r]^{\pi_2} \ar[d]_{b} & Y \ar[d]^{g} \\
+%        F X  & \ar[l]^{F \pi_1} FR \ar[r]_{F \pi_2} & F Y
+%        }
+%    \]
+%    If such is the case we write \alert{$x \sim y$}  
+%  \end{definition}
+%\end{frame}
+%
+%\begin{frame}{Observational Equivalence for Moore Automata}
+%  Given $\pv{o_1}{n_1} : X \to A \times X$ and
+%  $\pv{o_2}{n_2} : Y \to A \times Y$ we obtain from the previous slide 
+%  that $x \sim y$ iff
+%  \begin{itemize}
+%  \item $o_1(x) = o_2(y)$
+%  \item $n_1(x) \sim n_2(y)$
+%  \end{itemize}
+%\end{frame}
+%
+%\begin{frame}{Observational Equivalence for Labelled Transition Systems}
+%  Recall that we used systems of type $X \to \Pow(X)^L$ for establishing the
+%  \alert{semantics} of \alert{CCS processes}. This means that \dots
+%
+%  notions of observational behaviour/equivalence for such transition systems
+%  directly impact our concurrent language
+%
+%  \vfill Given $\overline{t_1} : X \to \Pow(X)^L$ and
+%  $\overline{t_2} : Y \to \Pow(Y)^L$, $x \sim y$ iff for all $l \in L$
+%  \begin{itemize}
+%  \item $\forall x' \in t_1(x,l).\  \exists y' \in t_2(y,l).\ x' \sim y'$
+%  \item $\forall y' \in t_2(y,l).\ \exists x' \in t_1(x,l).\ x' \sim y'$
+%  \end{itemize}
+%\end{frame}
+%
+%\begin{frame}{Observational Equivalence for Labelled Transition Systems}
+%
+%  \begin{equation*}
+%    \xymatrix{
+%      & q_1  \ar[ld]_{a}  \ar[rd]^{a} & & & & p_1  \ar[d]^{a} \\
+%      q_2 \ar[d]^{c}  && q_3  \ar[d]^{c}  & && p_2  \ar[ld]_{c}  \ar[rd]^{c} & \\
+%      q_4 & & q_5 & &p_4 & & p_5\\
+%      & q_1  \ar[ld]_{a}  \ar[rd]^{a} & & & & p_1  \ar[d]^{a} \\
+%      q_2 \ar[d]^{c}  && q_3  \ar[d]^{\rdb{b}}  & && p_2  \ar[ld]_{c}  \ar[rd]^{\rdb{b}} & \\
+%      q_4 & & q_5 & &p_4 & & p_5
+%    }
+%  \end{equation*}
+%
+%\end{frame}
+%
+%\begin{frame}{Is Observational Equivalence a Good Notion of Equivalence?}
+%
+%  \begin{block}{Coinduction Principle}
+%      Two states $x,y$ are observationally \alert{equivalent} iff they produce the
+%      \alert{same} observational behaviour
+%  \end{block}
+%  
+%\end{frame}
+%
+%
+%\begin{frame}{Process Equivalence}
+%  \begin{definition}
+%    Consider two processes $P,Q$ in CCS. They are equivalent (in
+%    symbols $P \sim Q$) whenever the corresponding states in the
+%    transition system are observationally equivalent
+%  \end{definition}
+%
+%  Show that
+%  \begin{itemize}
+%  \item $\prog{rec}\ X.\ (\prog{rec}\ Y.\ a.X \parallel b.Y)
+%    \sim (\prog{rec}\ X.\ a. X) \parallel (\prog{rec}\ Y.\ b. Y)$
+%  \item $(\prog{rec}\ X.\ a. X) \parallel (\prog{rec}\ Y.\ b. Y) \sim \prog{rec}\ X.\ (a.X + b.X)$
+%  \item $\prog{rec}\ X.\ (a.X + b.X) \not \sim (\prog{rec}\ X.\ a.X) + (\prog{rec}\ Y.\ b.Y)$
+%  \end{itemize}
+%\end{frame}
+%
+%\begin{frame}{An Algorithm for Finding Observationally Equivalent States}
+%  Consider two transition systems $\overline{t_1} : X \to X^L$ and $\overline{t_2} : Y \to Y^L$
+%
+%  For every $\sim_k \subseteq X \times Y$ define
+%  \begin{itemize}
+%  \item $\sim_0 := X \times Y$
+%  \item $x \sim_{k + 1} y$ iff for all $l \in L$: $\forall x' \in t_1(x,l).\ \exists y' \in t_2(y,l).\
+%    x' \sim_k y'$; \\
+%    $\forall y' \in t_2(y,l).\ \exists x' \in t_1(x,l).\
+%    x' \sim_k y'$
+%  \end{itemize}
+%
+%  If for some $k > 0$ we obtain $\sim_k\ =\ \sim_{k +1}$ then $\sim\ :=\ \sim_k$
+%\end{frame}
+%
+%\begin{frame}{Exercises}
+%  Show that
+%  \begin{itemize}
+%   \item $\prog{rec}\ X.\ a.a.X \sim \prog{rec}\ X.\ a.X$
+%   \item $\prog{rec}\ X.\ (a.X + a .a .X)\ \sim\ \prog{rec}\ X.\ a.x$
+%   \item $\prog{rec}\ X.\ (a. X + b.X) \not \sim (\prog{rec} X.\ a . X) + (\prog{rec} Y.\ b . Y)$
+%   \item $P \parallel 0 \sim P$
+%   \item $P + Q \sim Q + P$
+%   \item $P \parallel Q \sim Q \parallel P$
+%  \end{itemize}
+%\end{frame}
+%        \vfill
+%   \underline{Widely used} programming languages \alert{still} lack a formal
+%   semantics
+
+\end{document}
