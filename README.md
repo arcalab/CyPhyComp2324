@@ -19,8 +19,8 @@ concurrent algorithms.
 
   | Date         | Description |
   | ----------   |------------ |
-  | 05 feb. 2023 | Introduction to the module and its logistics ([slides](introSlides/intro.pdf)) |
-
+  | 05 feb. 2024 | Introduction to the module and its logistics ([slides](introSlides/intro.pdf)) |
+  | 12 feb. 2024 | Introduction to CCS. Exercises ([slides](CCS/CCS.pdf)) |
 
 # Assessment
 
