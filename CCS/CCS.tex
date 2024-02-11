@@ -165,7 +165,7 @@
   \begin{column}{0.8\textwidth}
     \begin{block}{Syntax}
       $P,Q ::= X \mid a . P\ |\ \sum_{ i \in I} P_i \ \mid P \parallel Q 
-      \mid P \backslash L$ \mid \dots
+      \mid P \backslash L \mid \dots$
     \end{block}
   \end{column}
   \begin{column}{0.23\textwidth}
@@ -175,7 +175,7 @@
   \end{minipage}
   \begin{itemize}
   \item $X$ is a process name
-  \item $a. P$ \underline{communicates} via channel $a$ and proceeds as $P$
+  \item $a. P$ \underline{communicates} via \underline{channel} $a$ and proceeds as $P$
   \item $\sum_{ i \in I} P_i$ non-deterministic choice between processes $P_i$
   \item $P \parallel Q$ \underline{parallel composition} 
           between processes $P$ and $Q$
@@ -198,8 +198,8 @@
                 \item $a . \mathtt{0} \parallel \bar{a} . \mathtt{0}$ - two processes
                         connected via channel $a$; information flows in one direction
                 \item $a . \bar{b} . \mathtt{0} \parallel \bar{a} . b . \mathtt{0}$ -
-                        info. flows in one direction via $a$ and in the inverse
-                        direction via $b$; latter used after $a$ is used 
+                        info. flows in one direction via $a$ and then in the inverse
+                        direction via $b$ 
                 \item $(a . \bar{b} . \mathtt{0} \parallel \bar{a} . b . \mathtt{0})
                   \backslash \{a,b\}$ - both channels $a,b$ now private
           \end{itemize}
@@ -239,7 +239,7 @@
   Write down a coffee machine that fails to deliver coffee sometimes
 \end{frame}
 
-\begin{frame}{The Semantics of CCS}
+\begin{frame}{Semantics of CCS}
         Every process yields a transition system
         according to the rules 
   \begin{flalign*}
@@ -289,7 +289,7 @@
 
 \section{Putting things into practice}
 
-\begin{frame}{CCS at work}
+\begin{frame}{CCS at Work}
   \begin{minipage}[0.3\textheight]{\textwidth}
   \begin{columns}[c]
   \begin{column}{0.62\textwidth}
@@ -305,7 +305,7 @@
 \end{frame}
 
 
-\begin{frame}{Mutual Exclusion in CCS}
+\begin{frame}{Starvation and Mutual Exclusion in CCS}
   We define three recursive processes
   \begin{flalign*}
     S & = \mathtt{rec}\, X.\ \overline{start} . finish . X & \qquad \quad (\text{the semaphore})\\
@@ -342,23 +342,36 @@
   Phil. 2 picks the fork on her left and then the fork on her right
 
   \vfill
-  Write down this system in CCS and discover whether it is possible that both philosophers
-  die of starvation
+  Write down this system in CCS and discover whether it is possible that both
+  philosophers can no longer eat
 \end{frame}
 
-\begin{frame}{Other cases}
-        Detection of both \alert{deadlocks} and \alert{livelocks} in
+\begin{frame}{Going beyond the Dining Philosophers Problem \dots}
+        Detection of both \alert{deadlocks} and \alert{livelocks} \eg\ in
         \begin{itemize}
                 \item Driving systems 
                 \item Pacemakers
-                \item CMS experiment at LHC
+                \item at the LHC
+                \item \dots
         \end{itemize}
 
-        \vfill
-        {\small See other applications in \url{https://www.mcrl2.org/web/index.html}}
+        See details at \url{https://www.mcrl2.org/web/index.html}
 \end{frame}
 
-\nocite{milner80,groote21}
+\begin{frame}{\dots and beyond CCS}
+        Different extensions of CCS to the 
+        \begin{itemize}
+                \item probabilistic
+                \item quantum
+                \item and \alert{\underline{timed}}
+        \end{itemize}
+        domains, among others
+        
+
+        \vfill
+        Stay tuned!
+\end{frame}
+\nocite{milner80}
 \bibliographystyle{amsalpha}
 \bibliography{biblio.bib}
 
