@@ -120,9 +120,9 @@
   \begin{examples}
     What are the outputs of the following programs?
     \begin{itemize}
-            \item $f()\{ \mathtt{print}\ a\ ; \mathtt{ret.\ 1} \} ;\
-                g()\{ \mathtt{print}\ b\ ; \mathtt{ret.\ 0} \};\
-                f()\ \mathtt{or}\ g()$ 
+            \item $f()\{ \mathtt{print}\ a; \mathtt{ret.\ 1} \} ;\
+                g()\{ \mathtt{print}\ b; \mathtt{ret.\ 0} \};\
+                x:= f() + g()$ 
             \item $x:=2\ ; (x := x + 1 \parallel  x := 0)$ 
             \item $(a:= 1\, ; \mathtt{print}\ b) \parallel 
                     (b:= 1\, ; \mathtt{print}\ a)$ 
@@ -165,9 +165,8 @@
   \begin{column}{0.8\textwidth}
     \begin{block}{Syntax}
       $P,Q ::= X \mid a . P\ |\ \sum_{ i \in I} P_i \ \mid P \parallel Q 
-      \mid P \backslash L$
+      \mid P \backslash L$ \mid \dots
     \end{block}
-    (for describing communication and concurrency)
   \end{column}
   \begin{column}{0.23\textwidth}
     \includegraphics[scale=0.25]{images/Milner.jpg}
@@ -288,6 +287,8 @@
   \end{enumerate}
 \end{frame}
 
+\section{Putting things into practice}
+
 \begin{frame}{CCS at work}
   \begin{minipage}[0.3\textheight]{\textwidth}
   \begin{columns}[c]
@@ -344,211 +345,21 @@
   Write down this system in CCS and discover whether it is possible that both philosophers
   die of starvation
 \end{frame}
-%
-%\section{Observational equivalence}
-%
-%\begin{frame}{The Quest for Observational Equivalence}
-%
-%  Sometimes we would like to replace a program for another one whose
-%  \alert{behaviour} we \alert{cannot distinguish} from the original
-%
-%  \begin{example}
-%    Why not replace $\prog{rec}\ X.\ a.a.X$ by the simpler process $\prog{rec}\ X.\ a.X$ ?
-%  \end{example}
-%
-%  \vfill
-%  For such substitutions to be sound we require a formal notion of observational equivalence
-%\end{frame}
-%
-%\begin{frame}{Observational Equivalence Informally}
-%
-%  Two programs are observationally equivalent if it is impossible to \alert{observe any
-%  difference} in their \alert{behaviour}
-%
-%  
-%  \vfill
-%  Here behaviour is described in terms of transition systems
-%
-%  \dots\ and therefore behaviour/equivalence needs to be pinned
-%  down to them
-%\end{frame}
-%
-%\begin{frame}{$F$-Transition Systems and Observational Behaviour}
-%  Every functor $F$ induces a notion of observational behaviour
-%
-%  \begin{example}[Moore automata]
-%    Every automaton $X \to A \times X$ induces a map
-%    $\sem{-} : X \to \tikzmark{om1} A^\omega \tikzmark{om2}$
-%  \end{example}
-%
-%  \begin{example}[Deterministic automata]
-%    Every automaton $X \to \prog{Bool} \times X^L$ induces 
-%    $\sem{ - } : X \times L^\ast \to \prog{Bool}$
-%  \end{example}
-%
-%  \vfill
-%  Intuitively $F$ provides a black-box perspective to the transition system \dots
-%
-%  states are not \alert{directly observable}; only their \alert{interaction} with the
-%  environment is
-%  
-%  \begin{tikzpicture}[overlay,remember picture,
-%     box/.style = {rounded corners},
-%     pin edge={-Stealth,thick, red}]
-%     \coordinate (om1) at ($({pic cs:om1})+(+0.5ex, 1.5ex)$);
-%     \coordinate (om2) at ($({pic cs:om2})+(-0.5ex,-0.5ex)$);
-%     \node[semitransparent, 
-%           fit=(om1) (om2),
-%           pin=below:\tiny{Infinite lists over $A$}]  {};
-%  \end{tikzpicture}
-%  
-%\end{frame}
-%
-%\begin{frame}{Question}
-%
-% \begin{equation*}
-%   \xymatrix{
-%     x_1 \ar@{|->}[d] \ar[r] & x_2  \ar[r] \ar@{|->}[d] & x_3  \ar[r] \ar@{|->}[d]
-%     & \cdots & & y\ar@(ur,dr)[] \ar@{|->}[d] \\
-%     a & a & a & && a
-%   }
-% \end{equation*}
-%  
-% \vfill
-% \begin{equation*}
-%   \xymatrix{
-%     & x_1  \ar[ld]_{a}  \ar[rd]^{a} & & & & y \ar[d]_{a}\\
-%     \xybox{(0,0.5)*+[Fo]{\xybox{(0,0.5)*+[Fo]{x_2}}}}  \ar[rr]^{c}
-%     && \xybox{(0,0.5)*+[Fo]{\xybox{(0,0.5)*+[Fo]{x_3}}}} \ar@(ur,dr)[]^{c}  & & &
-%     \xybox{(0,0.5)*+[Fo]{\xybox{(0,0.5)*+[Fo]{z}}}} \ar@(ur,dr)[]^{c}
-%   }
-% \end{equation*}
-%
-% \vfill
-%  Do $x_1$ and $y$ possess the same \alert{observable behaviour} in both cases?
-%
-%\end{frame}
-%
-%\begin{frame}{Just Another Brief Visit to the Field of Coalgebra}
-%
-%  The subject of \alert{systematically} deriving a notion of
-%  observable behaviour from a functor goes beyond this module \dots
-%
-%  \dots\ but you can always ask me about it after the lecture :-)
-%\end{frame}
-%
-%\begin{frame}{$F$-Transition Systems and Observational \underline{Equivalence}}
-%
-%  \begin{definition}
-%    Fix a functor $F$ and consider two transition systems
-%    $f : X \to F X$ and $g : Y \to F Y$. Two states $x \in X$, $y \in Y$
-%    are observationally equivalent if there exists a relation
-%    $R \subseteq X \times Y$ with $(x,y) \in R$ and there exists a
-%    transition system $b : R \to FR$ such that the diagram below commutes
-%    \[
-%      \xymatrix{
-%        X \ar[d]_{f} & \ar[l]_{\pi_1}  R \ar[r]^{\pi_2} \ar[d]_{b} & Y \ar[d]^{g} \\
-%        F X  & \ar[l]^{F \pi_1} FR \ar[r]_{F \pi_2} & F Y
-%        }
-%    \]
-%    If such is the case we write \alert{$x \sim y$}  
-%  \end{definition}
-%\end{frame}
-%
-%\begin{frame}{Observational Equivalence for Moore Automata}
-%  Given $\pv{o_1}{n_1} : X \to A \times X$ and
-%  $\pv{o_2}{n_2} : Y \to A \times Y$ we obtain from the previous slide 
-%  that $x \sim y$ iff
-%  \begin{itemize}
-%  \item $o_1(x) = o_2(y)$
-%  \item $n_1(x) \sim n_2(y)$
-%  \end{itemize}
-%\end{frame}
-%
-%\begin{frame}{Observational Equivalence for Labelled Transition Systems}
-%  Recall that we used systems of type $X \to \Pow(X)^L$ for establishing the
-%  \alert{semantics} of \alert{CCS processes}. This means that \dots
-%
-%  notions of observational behaviour/equivalence for such transition systems
-%  directly impact our concurrent language
-%
-%  \vfill Given $\overline{t_1} : X \to \Pow(X)^L$ and
-%  $\overline{t_2} : Y \to \Pow(Y)^L$, $x \sim y$ iff for all $l \in L$
-%  \begin{itemize}
-%  \item $\forall x' \in t_1(x,l).\  \exists y' \in t_2(y,l).\ x' \sim y'$
-%  \item $\forall y' \in t_2(y,l).\ \exists x' \in t_1(x,l).\ x' \sim y'$
-%  \end{itemize}
-%\end{frame}
-%
-%\begin{frame}{Observational Equivalence for Labelled Transition Systems}
-%
-%  \begin{equation*}
-%    \xymatrix{
-%      & q_1  \ar[ld]_{a}  \ar[rd]^{a} & & & & p_1  \ar[d]^{a} \\
-%      q_2 \ar[d]^{c}  && q_3  \ar[d]^{c}  & && p_2  \ar[ld]_{c}  \ar[rd]^{c} & \\
-%      q_4 & & q_5 & &p_4 & & p_5\\
-%      & q_1  \ar[ld]_{a}  \ar[rd]^{a} & & & & p_1  \ar[d]^{a} \\
-%      q_2 \ar[d]^{c}  && q_3  \ar[d]^{\rdb{b}}  & && p_2  \ar[ld]_{c}  \ar[rd]^{\rdb{b}} & \\
-%      q_4 & & q_5 & &p_4 & & p_5
-%    }
-%  \end{equation*}
-%
-%\end{frame}
-%
-%\begin{frame}{Is Observational Equivalence a Good Notion of Equivalence?}
-%
-%  \begin{block}{Coinduction Principle}
-%      Two states $x,y$ are observationally \alert{equivalent} iff they produce the
-%      \alert{same} observational behaviour
-%  \end{block}
-%  
-%\end{frame}
-%
-%
-%\begin{frame}{Process Equivalence}
-%  \begin{definition}
-%    Consider two processes $P,Q$ in CCS. They are equivalent (in
-%    symbols $P \sim Q$) whenever the corresponding states in the
-%    transition system are observationally equivalent
-%  \end{definition}
-%
-%  Show that
-%  \begin{itemize}
-%  \item $\prog{rec}\ X.\ (\prog{rec}\ Y.\ a.X \parallel b.Y)
-%    \sim (\prog{rec}\ X.\ a. X) \parallel (\prog{rec}\ Y.\ b. Y)$
-%  \item $(\prog{rec}\ X.\ a. X) \parallel (\prog{rec}\ Y.\ b. Y) \sim \prog{rec}\ X.\ (a.X + b.X)$
-%  \item $\prog{rec}\ X.\ (a.X + b.X) \not \sim (\prog{rec}\ X.\ a.X) + (\prog{rec}\ Y.\ b.Y)$
-%  \end{itemize}
-%\end{frame}
-%
-%\begin{frame}{An Algorithm for Finding Observationally Equivalent States}
-%  Consider two transition systems $\overline{t_1} : X \to X^L$ and $\overline{t_2} : Y \to Y^L$
-%
-%  For every $\sim_k \subseteq X \times Y$ define
-%  \begin{itemize}
-%  \item $\sim_0 := X \times Y$
-%  \item $x \sim_{k + 1} y$ iff for all $l \in L$: $\forall x' \in t_1(x,l).\ \exists y' \in t_2(y,l).\
-%    x' \sim_k y'$; \\
-%    $\forall y' \in t_2(y,l).\ \exists x' \in t_1(x,l).\
-%    x' \sim_k y'$
-%  \end{itemize}
-%
-%  If for some $k > 0$ we obtain $\sim_k\ =\ \sim_{k +1}$ then $\sim\ :=\ \sim_k$
-%\end{frame}
-%
-%\begin{frame}{Exercises}
-%  Show that
-%  \begin{itemize}
-%   \item $\prog{rec}\ X.\ a.a.X \sim \prog{rec}\ X.\ a.X$
-%   \item $\prog{rec}\ X.\ (a.X + a .a .X)\ \sim\ \prog{rec}\ X.\ a.x$
-%   \item $\prog{rec}\ X.\ (a. X + b.X) \not \sim (\prog{rec} X.\ a . X) + (\prog{rec} Y.\ b . Y)$
-%   \item $P \parallel 0 \sim P$
-%   \item $P + Q \sim Q + P$
-%   \item $P \parallel Q \sim Q \parallel P$
-%  \end{itemize}
-%\end{frame}
-%        \vfill
-%   \underline{Widely used} programming languages \alert{still} lack a formal
-%   semantics
+
+\begin{frame}{Other cases}
+        Detection of both \alert{deadlocks} and \alert{livelocks} in
+        \begin{itemize}
+                \item Driving systems 
+                \item Pacemakers
+                \item CMS experiment at LHC
+        \end{itemize}
+
+        \vfill
+        {\small See other applications in \url{https://www.mcrl2.org/web/index.html}}
+\end{frame}
+
+\nocite{milner80,groote21}
+\bibliographystyle{amsalpha}
+\bibliography{biblio.bib}
 
 \end{document}
