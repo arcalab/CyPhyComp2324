@@ -21,12 +21,14 @@ concurrent algorithms.
   | ----------   |------------ |
   | 05 feb. 2024 | Introduction to the module and its logistics ([slides](introSlides/intro.pdf)) |
   | 12 feb. 2024 | Introduction to CCS. Exercises ([slides](CCS/CCS.pdf)) |
+  | 19 feb. 2024 | Introduction to the theory of timed automata. Exercises ([slides](CCS/CCS.pdf)) |
 
 # Assessment
 
 The assessment is comprised of the following items:
 
 + Two individual sets of exercises to do at home (30%)
+        + [TPC-1](TPC1/tpc1.pdf)
 + Two group assignments (70%)
   
 # Contacts
