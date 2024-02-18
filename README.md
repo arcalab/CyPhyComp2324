@@ -21,7 +21,7 @@ concurrent algorithms.
   | ----------   |------------ |
   | 05 feb. 2024 | Introduction to the module and its logistics ([slides](introSlides/intro.pdf)) |
   | 12 feb. 2024 | Introduction to CCS. Exercises ([slides](CCS/CCS.pdf)) |
-  | 19 feb. 2024 | Introduction to the theory of timed automata. Exercises ([slides](CCS/CCS.pdf)) |
+  | 19 feb. 2024 | Introduction to the theory of timed automata. Exercises ([slides](introtimedAutomata/timed-automata.pdf)) |
 
 # Assessment
 
