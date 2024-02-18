@@ -330,55 +330,73 @@ Exercise: define $\pair{L, L_0, Act, C, Tr, Inv}$
 
 \end{frame}
 
-% % ----------------------------------------------------------------------------------
 \section{Parallel Composition}
-% %----------------------------------------------------------------------------------
-\begin{slide}{Parallel Composition of Timed Automata}
 
-  Let $H \subseteq Act_1 \cap Act_2$. The parallel composition of
+\begin{frame}{Parallel composition of timed automata}
+
+        Action labels as channels
+
+        Communication mechanism analogous to CCS
+
+        Shared clocks
+\end{frame}
+
+\begin{slide}{Definition}
+
+  Let $H = Act_1 \cap Act_2$. The parallel composition of
   $ta_1$ and $ta_2$ synchronising on $H$ is the timed automaton
-\begin{equation*}
-ta_1 \parallel_H ta_2 := \pair{L_1 \times L_2, L_{0,1} \times L_{0,2}, Act_{\parallel_H}, C_1 \cup C_2, Tr_{\parallel_H}, Inv_{\parallel_H}}
-\end{equation*}
+
+  \vspace{0.2cm}
+$ta_1 \parallel_H ta_2 := \pair{L_1 \times L_2, L_{0,1} \times L_{0,2}, 
+\mathbf{Act}, C_1 \cup C_2, \mathbf{Tr}, 
+\mathbf{Inv}}$
+
+  \vspace{0.2cm}
 \begin{itemize}
-\item $Act_{\parallel_H} = ((Act_1 \cup Act_2) - H) \cup \enset{\tau}$
-\item $Inv_{\parallel_H} (\ell_1,\ell_2) = Inv_1(\ell_1) \e  Inv_2(\ell_2)$
-\item $Tr_{\parallel_H}$ is given by:
+\item $\mathbf{Act} = ((Act_1 \cup Act_2) - H) \cup \enset{\tau}$
+\item $\mathbf{Inv} (\ell_1,\ell_2) = Inv_1(\ell_1) \e  Inv_2(\ell_2)$
+\item $\mathbf{Tr}$ is given by:
 \begin{itemize}
 \item $(\ell_1,\ell_2) \tran{g,a,U} (\ell'_1,\ell_2)\; $ if $\; a \not \in H \e  \ell_1 \tran{g,a,U} \ell'_1 $
 \item $(\ell_1,\ell_2) \tran{g,a,U} (\ell_1,\ell'_2)\; $ if $\; a \not \in H \e   \ell_2 \tran{g,a,U} \ell'_2$
-\item $(\ell_1,\ell_2) \tran{g,\tau,U} (\ell'_1,\ell'_2)\; $ if $\; a \in H \e  \ell_1 \tran{g_1,a,U_1} \ell'_1 \e \ell_2 \tran{g_2,a,U_2} \ell'_2$\\
+\item $(\ell_1,\ell_2) \tran{g,\tau,U} (\ell'_1,\ell'_2)\; $ if $\; a \in H \e  \ell_1 \tran{g_1,a,U_1} \ell'_1 \e \ell_2 \tran{g_2,\overline{a},U_2} \ell'_2$\\
 with $g = g_1 \e g_2$ and $U = U_1 \cup U_2$
 \end{itemize}
 \end{itemize}
 \end{slide}
-% %----------------------------------------------------------------------------------
-\begin{slide}{Example: revisiting the Lamp Interrupt}
+
+\begin{slide}{Example: (re)revisiting the lamp interrupt}
 \small
 
 \begin{figure}[htb]
   \centering
-  \includegraphics[width=8cm]{./images/lamp2.jpg}\\
+  \includegraphics[scale=0.25]{./images/Lamp.pdf}
+  \includegraphics[scale=0.09]{./images/User.pdf}\\
 \end{figure}
 
 
-\begin{block}{\uppaal:}
+\vfill
+\begin{block}{In \uppaal}
 \begin{itemize}
-\item communication occurs between \alert{complementary
-  actions} (marked by \alert{?} and \alert{!} annotations)
-\item only considers \alert{closed} systems 
+\item Complementary
+  actions marked by \alert{?} and \alert{!} annotations)
+\item All channels in $H$ are \alert{private}
 \end{itemize}
 \end{block}
 \end{slide}
 
 % %----------------------------------------------------------------------------------
-\begin{slide}{Exercise: Worker, Hammer, Nail}
-\small
+\begin{slide}{Exercise: worker, hammer, nail}
+        Write down the parallel composition of the following automata
 
 \begin{figure}[htb]
-  \centering
   % Requires \usepackage{graphicx}
-  \includegraphics[width=45mm]{./images/WHN.jpg}\\
+  \includegraphics[width=50mm]{./images/Worker.pdf}
+  \hspace{0.5cm}
+  \includegraphics[width=50mm]{./images/Hammer.pdf}
+
+  \vspace{0.5cm}
+  \includegraphics[width=50mm]{./images/Nail.pdf}
 \end{figure}
 \end{slide}
 %%%%%%%%%%%%%%
