@@ -22,6 +22,8 @@ concurrent algorithms.
   | 05 feb. 2024 | Introduction to the module and its logistics ([slides](introSlides/intro.pdf)) |
   | 12 feb. 2024 | Introduction to CCS. Exercises ([slides](CCS/CCS.pdf)) |
   | 19 feb. 2024 | Introduction to the theory of timed automata. Exercises ([slides](introtimedAutomata/timed-automata.pdf)) |
+  | 26 feb. 2024 | Jornadas física | 
+  | 04 mar. 2024 | UPPAAL, the philosophers, and the adventurers ([video](https://www.youtube.com/watch?v=7yDmGnA8Hw0)) |
 
 # Assessment
 
