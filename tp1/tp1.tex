@@ -1,0 +1,170 @@
+\documentclass[11pt]{article}
+
+%\renewcommand\familydefault{\sfdefault}
+ 
+%input preamble and macros
+\input{preamble}
+\input{macros}
+
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{hyperref}
+\usepackage[linewidth=1pt]{mdframed}
+%\newcommand{\N}{\mathbb{N}}
+%\newcommand{\Z}{\mathbb{Z}}
+
+% Named environments (no counters) 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+%\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+%\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+ 
+% Environments with counters
+\newtheoremstyle{myplain} {5mm}% ⟨Space above⟩
+{3mm}% ⟨Space below⟩
+{}% ⟨Body font⟩
+{}% ⟨Indent amount⟩
+{\bfseries}% ⟨Theorem head font⟩
+{.}% ⟨Punctuation after theorem head⟩
+{.5em}% ⟨Space after theorem head⟩2
+{}% ⟨Theorem head spec (can be left empty, meaning ‘normal’)⟩
+
+\date{}
+
+\theoremstyle{myplain}
+\newtheorem{exercise}{Exercise}
+
+\theoremstyle{definition} % no italics
+\newtheorem{subexercise}{}[exercise]
+
+\newcommand{\subex}[1]{\begin{subexercise}#1\end{subexercise}}
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Modelling and analysis of a cyber-physical system \\\small{Practical Assignment 1}}
+\author{Renato Neves}
+ 
+\maketitle
+
+\section*{First Part}
+The first goal of the assignment is to \emph{model} and
+\emph{analyse} a system that ensures the \emph{correct} functioning of
+traffic lights at a T-junction. The latter connects a ``major'' and a
+``minor'' road and is depicted below (together with the respective
+traffic lights):
+\begin{center}
+\includegraphics[scale=0.3]{images/tjunction.png}
+\end{center}
+In this scenario vehicles drive on the left side of the road
+and the cross in the picture represents a sensor that tells
+whether a car is waiting in the minor road or not.
+
+In order to guarantee a reasonable traffic flow, the system has 
+the following constraints:
+\begin{enumerate}
+\item The lights on the major road will be always set on green, and red
+	on the minor road \emph{unless} a vehicle is detected by the sensor.
+\item In the latter case, the lights will switch in the standard
+  manner and allow traffic to leave the minor road.  After a suitable
+  time interval (30s), the lights will revert to their default
+  position so that traffic can flow on the major road again.
+\item Finally, as soon as a vehicle is detected by the sensor the
+  latter is disabled until the minor-road lights are on red again.
+\end{enumerate}
+
+The system also respects the following \emph{temporal} constraints:
+\begin{enumerate}
+\item Interim lights stay on for 5s.
+\item There exists 1s delay between switching one light off and the
+  other on.
+\item The major-road light must stay on green for at least 30s in each
+  polling cycle, but must respond to the sensor immediately after
+  that.
+\end{enumerate}
+\underline{The first part of the students' assignment}:
+\begin{enumerate}
+\item Model in \textsc{UPPAAL} the system of traffic lights described
+  previously;
+\item Express in \textsc{CTL} the following \emph{reachability}
+  properties and test them in \textsc{UPPAAL}: (1) the minor-road
+  light can go green; (2) the major-road light can go red.
+\item Express in \textsc{CTL} the following \emph{safety} properties
+  and test them in \textsc{UPPAAL}: (3) the system never enters in a
+  deadlock state; (4) the minor-road and major-road lights cannot be
+  green at the same time.
+\item Express in \textsc{CTL} the following \emph{liveness} property
+  and test it in \textsc{UPPAAL}: (5) if there are cars waiting they
+  will \emph{eventually} have green light.
+\item Can you think of other desirable properties?  If so please register
+  them and check whether they hold or not.
+\end{enumerate}
+
+\section*{Second Part}
+
+The previous system of traffic lights works reasonably well under the
+assumption that one of the roads has more traffic than the other. But
+such an assumption is often \emph{too strong}: it may be the case that
+both roads have the same amount of traffic, or even that their traffic
+flow varies drastically throughout the day. The second part of this
+assignment (more exploratory) aims to address precisely this problem
+which is well-known to have significant impact in the economy and the
+environment~\footnote{\url{https://ourworld.unu.edu/en/green-idea-self-organizing-traffic-signals}}. To
+this effect, we can now assume that \underline{each traffic light has
+  a smart sensor attached to it}. The sensor informs whether the
+traffic near the light is \textsf{high}, \textsf{low}, or simply
+\textsf{no}n-existent.
+
+\medskip
+\noindent
+\underline{The second part of the assignment}:
+\begin{enumerate}
+\item Adapt your previous UPPAAL model to take into account the
+  information provided by the sensors. One expects, for example, that
+  if the rightmost sensor outputs \textsf{high} and the other sensors
+  output \textsf{no} then the rightmost traffic light should be on
+  green at least until the sensors provide new information.
+\item Verify that all the properties mentioned in the first part
+  of the assignment still hold.
+\item (Valorisation) Note that the second part of the assigment is of
+  a more exploratory nature, and thus we give freedom to adjust sensor
+  parameters as seen fit in order to promote different and creative
+  solutions. We will value properties expressed in CTL that say
+  something about the efficiency of the system developed by the
+  students.  Such a property can be for example, ``If the rightmost
+  sensor always detects \textsf{high} traffic and the others detect
+  \textsf{no} traffic at all, then we will observe at most one change
+  in the traffic lights''.
+\item Write a \underline{report for the first and second part of the
+    assignment} that explains (1) your design choices, (2) your models,
+  (3) the formulae that you used for benchmarking your systems, and (4)
+  the conclusions obtained.
+\end{enumerate}
+
+\section*{Submission instructions}
+
+\begin{mdframed}
+  \myparagraph{What to submit:} The report in PDF \emph{and} the
+  respective 
+  UPPAAL models. Send by email (\underline{nevrenato@gmail.com})
+  a unique zip file ``\bash{cpp2324-N1_N2.zip}'', where \bash{N1} and
+  \bash{N2} are your student numbers. The subject of the email should be
+  ``\bash{cpp2324 N1 N2}''.
+
+\myparagraph{Deadline:} 07 Apr 2024 @ 23h59
+\end{mdframed}
+
+
+\end{document}
