@@ -23,14 +23,16 @@ concurrent algorithms.
   | 12 feb. 2024 | Introduction to CCS. Exercises ([slides](CCS/CCS.pdf)) |
   | 19 feb. 2024 | Introduction to the theory of timed automata. Exercises ([slides](introtimedAutomata/timed-automata.pdf)) |
   | 26 feb. 2024 | Jornadas física | 
-  | 04 mar. 2024 | UPPAAL, the philosophers, and the adventurers ([video](https://www.youtube.com/watch?v=7yDmGnA8Hw0)) |
+  | 04 mar. 2024 | UPPAAL, the philosophers, and the adventurers ([video](https://www.youtube.com/watch?v=7yDmGnA8Hw0) and
+[model](adventurers.xml)) |
+  | 11 mar. 2024 | Continuation of the previous lecture. A logic for timed systems ([slides](Uppaal/uppaal.pdf)) |
 
 # Assessment
 
 The assessment is comprised of the following items:
 
 + Two individual sets of exercises to do at home (30%). [TPC-1](TPC1/tpc1.pdf)
-+ Two group assignments (70%)
++ Two group assignments (70%) [TP1](tp1/tp1.pdf)
   
 # Contacts
 

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+chan pick, drop;
+clock g_time;
+int[0,1] L;</declaration>
+	<template>
+		<name x="5" y="5">Lamp</name>
+		<declaration>// Place local declarations here.</declaration>
+		<location id="id0" x="-544" y="-238">
+		</location>
+		<location id="id1" x="-442" y="-314">
+			<committed/>
+		</location>
+		<location id="id2" x="-442" y="-161">
+		</location>
+		<location id="id3" x="-340" y="-238">
+		</location>
+		<init ref="id0"/>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="-552" y="-204">drop?</label>
+			<label kind="assignment" x="-561" y="-178">L = 1 - L</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-382" y="-195">drop?</label>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id2"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-382" y="-297">pick?</label>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-544" y="-297">pick?</label>
+		</transition>
+	</template>
+	<template>
+		<name>Adventurer</name>
+		<parameter>const int perf</parameter>
+		<declaration>clock y;</declaration>
+		<location id="id4" x="-1385" y="-680">
+		</location>
+		<location id="id5" x="-1155" y="-680">
+		</location>
+		<location id="id6" x="-1385" y="-527">
+		</location>
+		<location id="id7" x="-1155" y="-527">
+			<name x="-1130" y="-535">right</name>
+		</location>
+		<init ref="id4"/>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id4"/>
+			<label kind="guard" x="-1377" y="-612">y &gt;= perf</label>
+			<label kind="synchronisation" x="-1377" y="-637">drop!</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id6"/>
+			<label kind="guard" x="-1343" y="-552">L == 1</label>
+			<label kind="synchronisation" x="-1241" y="-552">pick!</label>
+			<label kind="assignment" x="-1300" y="-518">y := 0</label>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id7"/>
+			<label kind="guard" x="-1147" y="-620">y &gt;= perf</label>
+			<label kind="synchronisation" x="-1147" y="-646">drop!</label>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id5"/>
+			<label kind="guard" x="-1351" y="-705">L == 0</label>
+			<label kind="synchronisation" x="-1249" y="-705">pick!</label>
+			<label kind="assignment" x="-1300" y="-671">y := 0</label>
+		</transition>
+	</template>
+	<system>const int you_time = 1;
+const int assistant_time = 2;
+const int janitor_time = 5;
+const int professor_time = 10;
+
+You = Adventurer(you_time);
+Assistant = Adventurer(assistant_time);
+Janitor = Adventurer(janitor_time);
+Professor = Adventurer (professor_time);
+
+system You, Assistant, Janitor, Professor, Lamp;</system>
+	<queries>
+		<query>
+			<formula>E&lt;&gt; (You.right and Assistant.right and Janitor.right and Professor.right and g_time &lt; 17)</formula>
+			<comment></comment>
+		</query>
+		<query>
+			<formula></formula>
+			<comment></comment>
+		</query>
+	</queries>
+</nta>
