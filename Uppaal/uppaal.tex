@@ -5,7 +5,7 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta, calc, fit, tikzmark}
 \usepackage{pgfplots}
-
+\usepackage{hyperref}
 %-------------- template --------------------------------------------------
 \usetheme{metropolis}
 \metroset{block=fill}
@@ -363,4 +363,52 @@ Examples:
         \end{block}
 \end{frame}
 
+\section{Chapter's Conclusion}
+
+\begin{frame}{Keypoints}
+
+        Communicating systems as \tikzmark{z1} \alert{timed automata} \tikzmark{z2}
+
+        \begin{tikzpicture}[overlay,remember picture, box/.style
+        = {rounded corners}, pin edge={-Stealth,thick, red}] 
+        \coordinate (z1) at
+        ($({pic cs:z1})+(0.5ex, 1.5ex)$); 
+        \coordinate (z2) 
+                at ($({pic cs:z2})+(-1.5ex,-0.5ex)$); 
+        \node[semitransparent, fit=(z1) (z2),
+                pin=below:\tiny{Syntax}]
+        {};
+        \end{tikzpicture}
+
+        \vspace{0.5cm}
+        \alert{Semantics} for rigorous analysis and verification
+
+        \vspace{1cm}
+        \alert{UPPAAL} as an important tool of the cyber-physical engineer
+\end{frame}
+
+\begin{frame}{Keypoints}
+
+
+        \vspace{0.4cm}
+        \alert{Time} as the main physical process \dots
+
+        \dots\ others will appear in the next lectures
+
+        \vspace{0.4cm}
+        Barely scratched the surface \dots
+
+        \dots\ more about the theory of timed automata 
+        in the website
+\end{frame}
+\begin{frame}{Open Challenges}
+        \alert{Quantum} communicating systems 
+        and computational tools
+
+        Reasoning precisely about imprecisions
+
+        The thorny \href{https://www.youtube.com/watch?v=IzSs\_gJDVzI}{\alert{Reachability Problem}}
+
+        \dots
+\end{frame}
 \end{document}
