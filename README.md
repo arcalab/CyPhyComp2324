@@ -31,7 +31,7 @@ concurrent algorithms.
 The assessment is comprised of the following items:
 
 + Two individual sets of exercises to do at home (30%). [TPC-1](TPC1/tpc1.pdf)
-+ Two group assignments (70%) [TP1](tp1/tp1.pdf)
++ Two group assignments (70%). [TP1](tp1/tp1.pdf)
   
 # Contacts
 
