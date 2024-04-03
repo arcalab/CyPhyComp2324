@@ -1067,21 +1067,5 @@ pin edge={-Stealth,thick, red}]
         A proper handle of exact real-number computation
 \end{frame}
 
-\begin{frame}{A Million-Dollar Question}
-        \textbf{Q:} How to simulate a differential statement that
-        \alert{terminates as soon as} a certain \alert{event} occurs?  
-        \[
-                \mathtt{x}' = \mathtt{y}, \mathtt{y}' = -\mathtt{x} \> \mathtt{\blue{until}} 
-                \> \mathtt{x = y}
-        \]
-
-        \textbf{A:} No general solution for simulation with \alert{exact
-        precision}; and even approximated simulation raises problems :-( 
-        \begin{block}{Example}
-                $\mathtt{x}' = 1 \> \mathtt{\blue{until}} \> \mathtt{x = 2}  \>$
-                \text{ collapses almost always to }  \>
-                $\mathtt{x}' = 1 \> \mathtt{\blue{for}} \> \mathtt{\infty}$
-        \end{block}
-\end{frame}
 \end{document}
 
