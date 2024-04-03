@@ -843,6 +843,8 @@ pin edge={-Stealth,thick, red}]
 
                 \item Landing system
 
+                \item Bouncing Ball
+
                 \item Moving a particle from point A to B
 
                 \item Following a leader
@@ -889,6 +891,9 @@ pin edge={-Stealth,thick, red}]
 
 \begin{frame}{Moving a particle with a \underline{fixed} acceleration}
 
+        We accelerate and then brake
+
+        \vspace{0.5cm}
         \scalebox{0.55}{
                 \begin{tikzpicture}
                 \begin{axis}[ticks=none,width=10cm, height=4cm, x axis line style={}, grid =
@@ -927,6 +932,9 @@ pin edge={-Stealth,thick, red}]
 \end{frame}
 \begin{frame}{Moving a particle with positive velocity}
 
+        We maintain velocity and then brake
+
+        \vspace{0.5cm}
         \scalebox{0.55}{
                 \begin{tikzpicture}
                 \begin{axis}[ticks=none,width=10cm, height=4cm, x axis line style={}, grid =
@@ -965,6 +973,9 @@ pin edge={-Stealth,thick, red}]
 \end{frame}
 \begin{frame}{The more general case}
 
+        We accelerate, maintain velocity, and then brake
+
+        \vspace{0.5cm}
         \centering 
         \scalebox{0.7}{
                 \begin{tikzpicture}
@@ -1021,62 +1032,56 @@ pin edge={-Stealth,thick, red}]
   No solutions, means no collisions!!
 \end{frame}
 
+\section{Conclusions}
 
-\begin{frame}{Checkpoint}
-        We saw how to \alert{analyse} hybrid programs \alert{formally}
+\begin{frame}{Conclusions}
 
-        We also visited a zoo of hybrid programs -- which improved our 
-        ability to recognise them in the wild
+        Studied fundamentals of program semantics
 
+        Visited a zoo of hybrid programs -- which improved our ability to
+        recognise them in the wild
+
+        Saw how to design hybrid programs \alert{formally}
+
+        \vspace{0.5cm}
         \pause
         What next?
 \end{frame}
 
+\begin{frame}{Scenarios we did not cover}
+        Movement in $n$-dimensions
+
+        Trajectory correction
+
+        Orbital dynamics
+
+        \dots
+\end{frame}
+
+\begin{frame}{Open Challenges}
+
+        Integration of uncertainty, concurrency, and communication
+
+        A logical verification framework
+
+        A proper handle of exact real-number computation
+\end{frame}
 
 \begin{frame}{A Million-Dollar Question}
-        How to simulate a differential statement that \alert{terminates
-        as soon as} a certain \alert{event} occurs?  
-
+        \textbf{Q:} How to simulate a differential statement that
+        \alert{terminates as soon as} a certain \alert{event} occurs?  
         \[
-                \mathtt{x}' = 1 \> \mathtt{\blue{until}} \> \mathtt{x = 2}
+                \mathtt{x}' = \mathtt{y}, \mathtt{y}' = -\mathtt{x} \> \mathtt{\blue{until}} 
+                \> \mathtt{x = y}
         \]
 
         \textbf{A:} No general solution for simulation with \alert{exact
         precision}; and even approximated simulation raises problems :-( 
-        \[
-                (\mathtt{x}' = 1 \> \mathtt{\blue{until}} \> \mathtt{x = 2}) \> \>
-                \text{ collapses almost always to } \> \>
-                (\mathtt{x}' = 1 \> \mathtt{\blue{for}} \> \mathtt{\infty})
-        \]
-
-        \vfill
-        \pause
-        For this lecture we take a (naive) approach:
-        \[
-                (\overline{\mathtt{x}}' = \overline{\mathtt{t}} \>
-                \blue{\mathtt{until}}_\epsilon \> \mathtt{b}) \> \hat = \>
-                \blue{\mathtt{while}} \> \neg \mathtt{b} \> \{ \overline{\mathtt{x}}' 
-                = \overline{\mathtt{t}} \> \blue{\mathtt{for}} \> \epsilon \} 
-        \]
-        \end{frame}
-\begin{frame}{(Another) Zoo of Hybrid Programs}
-        \begin{itemize}
-                \item Bouncing Ball
-                \item Fireflies
-        \end{itemize}
-
-\end{frame}
-
-\begin{frame}{Conclusions}
-        Studied \alert{semantics} for (hybrid) prog. lang.
-
-        Needed to interpret/analyse programs \alert{mathematically}
-
-        Several case-studies left unexplored (e.g. movement in $n$-dimensions,
-                orbital trajectories, trajectory correction)
-
-        Several challenges left open (e.g. precise simulations, stability,
-        uncertainty, recursion, concurrency, logical verification)
+        \begin{block}{Example}
+                $\mathtt{x}' = 1 \> \mathtt{\blue{until}} \> \mathtt{x = 2}  \>$
+                \text{ collapses almost always to }  \>
+                $\mathtt{x}' = 1 \> \mathtt{\blue{for}} \> \mathtt{\infty}$
+        \end{block}
 \end{frame}
 \end{document}
 
