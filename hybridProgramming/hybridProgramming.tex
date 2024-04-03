@@ -835,7 +835,7 @@ pin edge={-Stealth,thick, red}]
         \end{itemize}
 \end{frame}
 
-\begin{frame}{A Zoo of Hybrid Programs}
+\begin{frame}{A Zoo of Newtonian Hybrid Programs}
 
         \begin{itemize}
 
@@ -843,16 +843,145 @@ pin edge={-Stealth,thick, red}]
 
                 \item Landing system
 
-                \item \underline{Move a particle from A to B}
+                \item Moving a particle from point A to B
 
-                \item \underline{Follow the leader}
+                \item Following a leader
         \end{itemize}
 
 \end{frame} 
 
 \section{Design Patterns}
 
-\begin{frame}{Analytical Testing and Following the Leader pt. I}
+\begin{frame}{A selection of design patterns}
+        We explore the last two (ubiquituous) scenarios
+
+        Tackle them via \alert{Analytic Geometry}
+\end{frame}
+
+\begin{frame}{Moving a particle}
+
+        \scalebox{0.8}{
+                \begin{tikzpicture}
+                \begin{axis}[width=10cm, height=4cm, x axis line style={}, grid =
+                    major, y axis line style={},
+                     title={\textbf{}}, xlabel={Time $\rightarrow$}				, xtick = {0,1,2,3,4,5,6} , xmax=7, axis lines*=center,
+                     ytick={0,1,2,3,4,5,6}, ylabel={Velocity $\rightarrow$},
+                     xlabel near ticks, ylabel near ticks] \addplot [color=blue, smooth,
+                     domain = 0:5, fill = blue!40!white, opacity=0.4 ] coordinates {
+                     (0,0) (2,2) (4,4) (6,2) (8,4) (8,0)};
+                \end{axis}
+                \end{tikzpicture}
+        }
+        \begin{tikzpicture}[overlay,remember picture,
+                box/.style = {rounded corners},
+                pin edge={-Stealth,thick, red}]
+        \coordinate (ar1) at (-1,1.5);
+        \coordinate (ar2) at (0,1.5);
+        \node[semitransparent,
+           fit=(ar1) (ar2),
+           pin=right:\scriptsize{Area = distance travelled}]  {};
+        \end{tikzpicture} 
+
+        \vspace{0.5cm}
+        \centering
+        What should be the function's shape?
+\end{frame}
+
+\begin{frame}{Moving a particle with a \underline{fixed} acceleration}
+
+        \scalebox{0.55}{
+                \begin{tikzpicture}
+                \begin{axis}[ticks=none,width=10cm, height=4cm, x axis line style={}, grid =
+                    major, y axis line style={},
+                     title={\textbf{}}, xlabel={Time $\rightarrow$}, xmax=7, axis lines*=center,
+                     ylabel={Velocity $\rightarrow$}] \addplot [color=blue,
+                     domain = 0:5, fill = blue!40!white, opacity=0.4 ] coordinates {
+                     (0,0) (2,2) (3,3) (4,2) (6,0)};
+                \end{axis}
+                \end{tikzpicture}
+        }
+        \hspace{0.6cm}
+        \scalebox{0.55}{
+                \begin{tikzpicture}
+                \begin{axis}[ticks=none, width=10cm, height=4cm, x axis line style={}, grid =
+                    major, y axis line style={},
+                     title={\textbf{}}, xlabel={Time $\rightarrow$}				
+                     , xmax=7, axis lines*=center,
+                     ylabel={Accel $\rightarrow$},
+                     xlabel near ticks, ylabel near ticks] \addplot [color=blue,
+                     domain = 0:5, fill = blue!40!white, opacity=0.4 ] coordinates {
+                     (0,0) (0,3) (2,3) (3,3) (4,3) (6,3) (6,0)};
+                \end{axis}
+                \end{tikzpicture}
+        }
+        \vspace{1cm}
+        \centering
+        \[
+        \begin{cases}
+                \mathrm{dist} = \frac{1}{2} \cdot b \cdot h \\
+                h = \frac{1}{2} \cdot b \cdot \mathrm{accel}
+        \end{cases}
+        \Longrightarrow
+        b = \sqrt{ \frac{4 \cdot \mathrm{dist}}{\mathrm{accel}} }
+        \]
+\end{frame}
+\begin{frame}{Moving a particle with positive velocity}
+
+        \scalebox{0.55}{
+                \begin{tikzpicture}
+                \begin{axis}[ticks=none,width=10cm, height=4cm, x axis line style={}, grid =
+                    major, y axis line style={},
+                     title={\textbf{}}, xlabel={Time $\rightarrow$}, xmax=7, axis lines*=center,
+                     ylabel={Velocity $\rightarrow$}] \addplot [color=blue,
+                     domain = 0:5, fill = blue!40!white, opacity=0.4 ] coordinates {
+                     (0,0) (0,3) (2,3) (3,3) (4,2) (6,0)};
+                \end{axis}
+                \end{tikzpicture}
+        }
+        \hspace{0.6cm}
+        \scalebox{0.55}{
+                \begin{tikzpicture}
+                \begin{axis}[ticks=none, width=10cm, height=4cm, x axis line style={}, grid =
+                    major, y axis line style={},
+                     title={\textbf{}}, xlabel={Time $\rightarrow$}				
+                     , xmax=7, axis lines*=center,
+                     ylabel={Accel $\rightarrow$},
+                     xlabel near ticks, ylabel near ticks] \addplot [color=blue,
+                     domain = 0:5, fill = blue!40!white, opacity=0.4 ] coordinates {
+                     (0,0) (0,3) (2,3) (3,3) (4,3) (6,3) (6,0)};
+                \end{axis}
+                \end{tikzpicture}
+        }
+        \vspace{1cm}
+        \centering
+        \[
+        \begin{cases}
+                \mathrm{dist} = v \cdot b_1 + \frac{1}{2} \cdot v \cdot b_2 \\
+                v = b_2 \cdot \mathrm{accel} 
+        \end{cases}
+        \Longrightarrow
+        b_1 = \frac{ 2 \cdot \mathrm{dist} - \frac{v^2}{a}}{2 \cdot v}
+        \]
+\end{frame}
+\begin{frame}{The more general case}
+
+        \centering 
+        \scalebox{0.7}{
+                \begin{tikzpicture}
+                \begin{axis}[ticks=none,width=10cm, height=4cm, x axis line style={}, grid =
+                    major, y axis line style={},
+                     title={\textbf{}}, xlabel={Time $\rightarrow$}, xmax=7, axis lines*=center,
+                     ylabel={Velocity $\rightarrow$}] \addplot [color=blue,
+                     domain = 0:5, fill = blue!40!white, opacity=0.4 ] coordinates {
+                     (0,0) (1,1) (2,2) (3,3) (4,3) (5,2) (6,1) (7,0)};
+                \end{axis}
+                \end{tikzpicture}
+        }
+
+        \Large{\dots}
+        \end{frame}
+
+\begin{frame}{Following the leader pt. I}
   \begin{minipage}[0.3\textheight]{\textwidth}
   \begin{columns}[c]
   \begin{column}{0.45\textwidth}
@@ -870,7 +999,7 @@ pin edge={-Stealth,thick, red}]
   generate a velocity so high that we won't brake in time
 \end{frame}
 
-\begin{frame}{Analytical Testing and Following the Leader pt. II}
+\begin{frame}{Following the leader pt. II}
   \begin{minipage}[1\textheight]{\textwidth}
   \begin{columns}[c]
   \begin{column}{0.45\textwidth}
@@ -885,7 +1014,7 @@ pin edge={-Stealth,thick, red}]
 
   \pause
   \vspace{0.5cm}
-  The conditional now arises from \alert{solving} the equation for $t$
+  Conditional arises from \alert{solving} the equation for $t$
   \[
         x_0 + v_0t + \frac{1}{2}(-2)t^2 = y_0 + 10t\ 
   \]
