@@ -1,0 +1,168 @@
+\documentclass[a4paper, 11pt]{article}
+
+%% packages
+\usepackage{fullpage} % changes the margin
+\usepackage{hyperref} % Links
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{braket}
+\usepackage{proof}
+%%
+
+%% macros
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\vecs}{\mathcal{V}}
+\newcommand{\id}{\mathrm{id}}
+%% environments
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{examples}{Example}
+\newtheorem{exercises}{Exercises}
+\newtheorem{exercise}{Exercise}
+\newtheorem{postulate}{Postulate}
+\newtheoremstyle{sub}% name
+{2pt}        % Space above, empty = `usual value'
+{2pt}        % Space below
+{}              % Body font
+{}    % Indent amount (empty = no indent, \parindent = para indent)
+{}              % Thm head font
+{.}    % Punctuation after thm head
+{0.5em}         % Space after thm head: \newline = linebreak
+{{\thmname{#1}\thmnumber{ #2}}\thmnote{ (#3)}}  % Thm head spec
+\theoremstyle{sub}
+\newtheorem{subexercise}{Part}[exercise]
+\usepackage[linewidth=1pt]{mdframed}
+
+%% config
+\date{}
+\linespread{1.10}
+%%
+
+\begin{document}
+
+\title{Cyber-Physical Programming\\ \large TPC-2}
+\author{Renato Neves \\ \scriptsize
+  \href{mailto:nevrenato@di.uminho.pt}{nevrenato@di.uminho.pt}}
+\maketitle
+
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+It is often necessary to incorporate \emph{wait calls} in whatever programming
+language we are working with. For example, we might wish to perform an action
+every $n$ seconds such as reading from a velocity sensor. So let us consider
+the following simple, imperative programming language:
+\[
+        \mathtt{Prog}(X) \ni \mathtt{x\ \blue{:=}\ t} \mid
+        \mathtt{\blue{wait_n}(p)} \mid
+	\mathtt{p \> \blue{;} \> q} \mid
+	\mathtt{\blue{if} \> b \> \blue{then} \> p \> \blue{else} \> q} \mid
+	\mathtt{\blue{while} \> b \> \blue{do} \> \{ \> p \> \}}
+\]
+Note that $\mathtt{t}$ is a \emph{linear term} (defined in the previous lectures)
+and $\mathtt{n}$ (in the program construct $\blue{\mathtt{wait_n}}$) is a natural
+number.  The program $\mathtt{\blue{wait_n}(p)}$ reads as ``wait $n$ seconds
+and then run program $\mathtt{p}$".  For such a language we take a semantics
+$\langle \mathtt{p}, \sigma \rangle \Downarrow n, \sigma'$ which informs not
+only of the output of $\mathtt{p}$ (i.e. $\sigma'$) but also its execution time
+(i.e. $n$).  Specifically, we adopt the following semantic rules:
+\begin{flalign*}
+        \infer[(\text{asg})]{
+                \langle \mathtt{x\ \blue{:=}\ t}, \sigma \rangle \Downarrow 
+                0, \sigma[\mathtt{r}/\mathtt{x}]
+        }{
+                \langle \mathtt{t}, \sigma \rangle \Downarrow \mathtt{r}
+                }
+        \hspace{2cm}
+        \infer[(\text{wait})]{
+                \langle \mathtt{\blue{wait_m}(p)}, \sigma \rangle
+                \Downarrow m+n, \sigma'
+        }{
+                \langle \mathtt{p}, \sigma \rangle \Downarrow n, \sigma'      
+                }
+\end{flalign*}
+\begin{flalign*}
+        \infer[(\text{seq})]{
+                \langle \mathtt{p\ \blue{;}\ q}, \sigma \rangle \Downarrow
+                n + m, \sigma'' 
+        }{
+                \langle \mathtt{p}, \sigma \rangle \Downarrow n, \sigma' 
+                \qquad
+                \langle \mathtt{q}, \sigma' \rangle \Downarrow m, \sigma''
+        }
+\end{flalign*}
+\begin{flalign*}
+        \infer[(\text{if$_1$})]{
+                \langle \mathtt{\blue{if} \> b \> \blue{then} \> \> p \> \blue{else} \> q}, 
+                \sigma \rangle \Downarrow n, \sigma'
+        }{
+                \langle \mathtt{b}, \sigma \rangle \Downarrow \mathtt{tt} \qquad
+                \langle \mathtt{p}, \sigma \rangle \Downarrow n, \sigma'
+        } \hspace{1cm} 
+        \infer[(\text{if$_2$})]{
+                \langle \mathtt{\blue{if} \> b \> \blue{then} \> \> p \> \blue{else} \> q}, 
+                \sigma \rangle \Downarrow n, \sigma'
+        }{
+                \langle \mathtt{b}, \sigma \rangle \Downarrow \mathtt{ff} \qquad
+                \langle \mathtt{q}, \sigma \rangle \Downarrow n, \sigma'
+        }
+\end{flalign*}
+\begin{flalign*}
+        \infer[(\text{wh$_1$})]{
+                \langle \mathtt{\blue{while} \> b \> \blue{do} \> \{ \> p \> \}}, \sigma \rangle
+                \Downarrow n+m, \sigma''
+        }{
+                \langle \mathtt{b}, \sigma \rangle \Downarrow \mathtt{tt} \qquad
+                \langle \mathtt{p}, \sigma \rangle \Downarrow n, \sigma' \qquad
+                \langle \mathtt{\blue{while} \> b \> \blue{do} \> \{ \> p \> \}}, \sigma'
+                \rangle \Downarrow m, \sigma'' 
+        }
+\end{flalign*}
+\begin{flalign*}
+        \infer[(\text{wh$_2$})]{
+                \langle \mathtt{\blue{while} \> b \> \blue{do} \> \{ \> p \> \}}, \sigma \rangle
+                \Downarrow 0, \sigma
+        }{
+                \langle \mathtt{b}, \sigma \rangle \Downarrow \mathtt{ff}
+        }
+\end{flalign*}
+
+We can then define a natural notion of \emph{equivalence} for our programs: we
+say that two programs \texttt{p} and \texttt{q} are equivalent (in symbols,
+$\mathtt{p} \sim \mathtt{q}$) if for all environments $\sigma$ we have,
+\[
+        \langle \mathtt{p}, \sigma \rangle \Downarrow n, \sigma' \text{ iff }
+        \langle \mathtt{q}, \sigma \rangle \Downarrow n, \sigma'
+\]
+
+
+\begin{exercise}
+        Implement in \texttt{Haskell} the while-language described above and
+        its semantics. Suggestion: use the code developed in the previous
+        lectures.
+\end{exercise}
+
+\begin{exercise}[***]
+        Prove that $\mathtt{\blue{wait_n}(\blue{wait_m}(p))} \sim
+        \mathtt{\blue{wait_{n + m}}(p)}$. Can you think of (and prove) other
+        interesting equivalences? Note that the more equivalences a compiler
+        knows the more ways it has of performing optimisations.
+\end{exercise}
+
+\begin{mdframed}
+  What to submit: An \texttt{.hs} file containing the code that you developed
+  (properly commented!) for the first exercise. A \texttt{.pdf} file containing
+  the solution to the second exercise. Please send a corresponding
+  \texttt{.zip} archive by email (\texttt{nevrenato@di.uminho.pt}) with the
+  name ``\texttt{cpp2324-N.zip}'', where ``\texttt{N}'' is your student number.
+  The subject of the email should be ``\texttt{cpp2324 N TPC-2}''.
+\end{mdframed}
+
+
+
+%% Bibliography
+\bibliographystyle{alpha}
+\bibliography{biblioTeaching}
+
+\end{document}
