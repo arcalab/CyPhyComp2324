@@ -25,8 +25,8 @@ concurrent algorithms.
   | 26 feb. 2024 | Jornadas física | 
   | 04 mar. 2024 | UPPAAL, the philosophers, and the adventurers ([video](https://www.youtube.com/watch?v=7yDmGnA8Hw0) and [model](adventurers.xml)) |
   | 11 mar. 2024 | Continuation of the previous lecture. A logic for timed systems ([slides](Uppaal/uppaal.pdf)) |
-  | 8 apr. 2024  | Operational semantics of simple languages. ([slides](hybridProgramming/hybridProgramming.pdf)) |
-  | 8 apr. 2024  | Supplementary lecture. Recalling Haskell. ([code](lectureCPC.hs)) |
+  | 8 apr. 2024  | Operational semantics of simple languages ([slides](hybridProgramming/hybridProgramming.pdf)) |
+  | 8 apr. 2024  | Supplementary lecture. Recalling Haskell ([code](lectureCPC.hs)) |
 
 # Assessment
 
