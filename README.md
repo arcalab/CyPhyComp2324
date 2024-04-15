@@ -27,6 +27,7 @@ concurrent algorithms.
   | 11 mar. 2024 | Continuation of the previous lecture. A logic for timed systems ([slides](Uppaal/uppaal.pdf)) |
   | 8 apr. 2024  | Operational semantics of simple languages ([slides](hybridProgramming/hybridProgramming.pdf)) |
   | 8 apr. 2024  | Supplementary lecture. Recalling Haskell ([code](lectureCPC.hs)) |
+  | 15 apr. 2024  | Continuation of the previous lecture. Introduction to programming with effects ([slides](monads/lambdaCalc.pdf)) |
 
 # Assessment
 
