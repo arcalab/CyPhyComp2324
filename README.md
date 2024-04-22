@@ -28,6 +28,8 @@ concurrent algorithms.
   | 8 apr. 2024  | Operational semantics of simple languages ([slides](hybridProgramming/hybridProgramming.pdf)) |
   | 8 apr. 2024  | Supplementary lecture. Recalling Haskell ([code](lectureCPC.hs)) |
   | 15 apr. 2024  | Continuation of the previous lecture. Introduction to programming with effects ([slides](monads/lambdaCalc.pdf)) |
+  | 22 apr. 2024  | Continuation of the previous lecture. Lambda-calculus with algebraic operations ([slides](monads/stlcE.pdf)) |
+
 
 # Assessment
 
