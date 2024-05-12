@@ -30,6 +30,7 @@ concurrent algorithms.
   | 15 apr. 2024  | Continuation of the previous lecture. Introduction to programming with effects ([slides](monads/lambdaCalc.pdf)) |
   | 22 apr. 2024  | Continuation of the previous lecture. Lambda-calculus with algebraic operations ([slides](monads/stlcE.pdf)) |
   | 29 apr. 2024  | Introduction to monads. Examples and exercises ([slides](monads/stlcE.pdf)) |
+  | 06 may 2024  | Enterro da gata. |
   | 13 may 2024  | Semantics of lambda-calculus with algebraic operations. Programming with monads. ([slides](monads/stlcE.pdf) and [code](code.zip)) |
 
 
