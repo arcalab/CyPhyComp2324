@@ -421,76 +421,76 @@
   \end{flalign*}
   can be equipped with a monadic structure
 \end{slide}
-%\section{Capitalising on the Lessons Learned Thus Far}
-%\begin{frame}{To Keep In Mind}
-%  Let us use what we learned thus far to extend $\lambda$-calculus
-%  with algebraic operations and provide it with a proper semantics
-%
-%  \vspace{0.5cm}
-%  To this effect, recall that,
-%  \begin{itemize}
-%  \item we fix a signature $\Sigma$ of algebraic operations
-%  \item we have monads $(T,\eta,(-)^\star)$ at our disposal
-%  \item Programs $\Gamma \vljud V : \typeA$ can be seen either as
-%    functions of type $\sem{\Gamma} \to \sem{\typeA}$ or of 
-%    type $\sem{\Gamma} \to T\sem{\typeA}$
-%  \end{itemize}
-%\end{frame}
-%\begin{slide}{Semantics for Effectful Simply-Typed $\lambda$-Calculus}
-%    Types $\typeA$ are interpreted as \alert{sets} $\sem{\typeA}$
-%  \begin{flalign*}
-%    \sem{1}\ = \{ \star \} \hspace{.7cm}
-%    \sem{\typeA \times \typeB}\ = \sem{\typeA} \times \sem{\typeB} \hspace{0.7cm}
-%   \sem{\typeA \to \typeB}\ = (T\sem{\typeB})^{\sem{\typeA}} 
-% \end{flalign*}
-% \vfill
-% A typing context $\Gamma$ is interpreted as
-% \begin{flalign*}
-%  \sem{\Gamma}\ = \sem{x_1 : \typeA_1 \times \dots \times x_n : \typeA_n}\ =
-% \sem{\typeA_1} \times \dots \times \sem{\typeA_n} 
-% \end{flalign*}
-% \vfill
-% For each operation $(\sigma,n) \in \Sigma$ and set $X$ we postulate
-% the existence of a map
-% \begin{flalign*}
-%   \sem{\sigma}_X : (TX)^n \longrightarrow TX
-% \end{flalign*}
-%\end{slide}
-%
-%
-%\begin{slide}{Semantics for effectful simply-typed $\lambda$-calculus II}
-%  \footnotesize
-%   \begin{flalign*}
-%    \infer{\sem{\Gamma \vljud x_i}\ = \pi_i}{x_i : \typeA \in \Gamma}
-%    \hspace{1cm}
-%    \infer{\sem{\Gamma \vljud \ast}\ = \> !}{}
-%    \hspace{1cm}
-%    \infer{\sem{\Gamma \vljud \langle V, U \rangle : \typeA \times \typeB}\ = \pv{f,g}}
-%    {\sem{\Gamma \vljud V : \typeA} = f \qquad \sem{\Gamma \vljud U : \typeB}\ = g}
-%  \end{flalign*}
-%  \begin{flalign*}
-%       \infer[]{\sem{\Gamma \vljud \lambda x : \typeA . \, M : \typeA
-%        \to \typeB}\ = \lambda f}
-%    {\sem{\Gamma, x : \typeA \cojud M : \typeB}\ = f} \hspace{2cm}
-%          \infer[]{\sem{\Gamma \vljud \pi_1 V : \typeA}\ = \pi_1 \comp f }
-%      {\sem{\Gamma \vljud V: \typeA \times \typeB}\ = f}
-%  \end{flalign*}
-%  \dotfill
-%  \begin{flalign*}
-%    \infer{\sem{\Gamma \cojud \ret V : \typeA}\ = \eta \comp f}
-%    {\sem{\Gamma \vljud V : \typeA}\ = f} \hspace{1cm}
-%    \infer{\sem{\Gamma \cojud x \leftarrow M \pcomp N : \typeB} = g^\star \comp f}
-%    {\sem{\Gamma \cojud M : \typeA} = f \qquad \sem{x:\typeA \cojud N : \typeB} = g}
-%  \end{flalign*}
-%  \begin{flalign*}
-%     \infer[]{\sem{\Gamma \cojud V \, U : \typeB}\ = \mathrm{app} \comp \pv{f,g}}
-%     {\sem{\Gamma \vljud  V : \typeA \to \typeB}\ = f \quad
-%     \sem{\Gamma \vljud  U : \typeA}\ = g} \\[2.5ex]
-%     \infer{\sem{\Gamma \cojud \sigma(M_1, \dots M_n)}\ = \sem{\sigma}_{\sem{\typeA}}
-%     \comp \pv{f_1,\dots,f_n}}{(\sigma, n) \in \Sigma \qquad \forall i
-%     \leq n . \> \sem{\Gamma \cojud M_i : \typeA} = f_i}
-%  \end{flalign*}
-%\end{slide}
+
+\begin{frame}{To Keep In Mind}
+  Let us use what we learned to extend $\lambda$-calculus with algebraic
+  operations and provide it with a proper semantics
+
+  \vspace{0.5cm}
+  Recall that,
+  \begin{itemize}
+  \item we fix a signature $\Sigma$ of algebraic operations
+  \item we have monads $(T,\eta,(-)^\star)$ at our disposal
+  \item Programs $\Gamma \vljud V : \typeA$ can be seen either as
+    functions of type $\sem{\Gamma} \to \sem{\typeA}$ or of 
+    type $\sem{\Gamma} \to T\sem{\typeA}$
+  \end{itemize}
+\end{frame}
+\begin{slide}{Semantics for Effectful Simply-Typed $\lambda$-Calculus}
+    Types $\typeA$ are interpreted as \alert{sets} $\sem{\typeA}$
+  \begin{flalign*}
+    \sem{1}\ = \{ \star \} \hspace{.7cm}
+    \sem{\typeA \times \typeB}\ = \sem{\typeA} \times \sem{\typeB} \hspace{0.7cm}
+   \sem{\typeA \to \typeB}\ = (T\sem{\typeB})^{\sem{\typeA}} 
+ \end{flalign*}
+ \vfill
+ A typing context $\Gamma$ is interpreted as
+ \begin{flalign*}
+  \sem{\Gamma}\ = \sem{x_1 : \typeA_1, \dots ,x_n : \typeA_n}\ =
+ \sem{\typeA_1} \times \dots \times \sem{\typeA_n} 
+ \end{flalign*}
+ \vfill
+ For each operation $(\sigma,n) \in \Sigma$ and set $X$ we postulate
+ the existence of a map
+ \begin{flalign*}
+   \sem{\sigma}_X : (TX)^n \longrightarrow TX
+ \end{flalign*}
+\end{slide}
+
+
+\begin{slide}{Semantics for effectful simply-typed $\lambda$-calculus II}
+  \footnotesize
+   \begin{flalign*}
+    \infer{\sem{\Gamma \vljud x_i}\ = \pi_i}{x_i : \typeA \in \Gamma}
+    \hspace{1cm}
+    \infer{\sem{\Gamma \vljud \ast}\ = \> !}{}
+    \hspace{1cm}
+    \infer{\sem{\Gamma \vljud \langle V, U \rangle : \typeA \times \typeB}\ = \pv{f,g}}
+    {\sem{\Gamma \vljud V : \typeA} = f \qquad \sem{\Gamma \vljud U : \typeB}\ = g}
+  \end{flalign*}
+  \begin{flalign*}
+       \infer[]{\sem{\Gamma \vljud \lambda x : \typeA . \, M : \typeA
+        \to \typeB}\ = \lambda f}
+    {\sem{\Gamma, x : \typeA \cojud M : \typeB}\ = f} \hspace{2cm}
+          \infer[]{\sem{\Gamma \vljud \pi_1 V : \typeA}\ = \pi_1 \comp f }
+      {\sem{\Gamma \vljud V: \typeA \times \typeB}\ = f}
+  \end{flalign*}
+  \dotfill
+  \begin{flalign*}
+    \infer{\sem{\Gamma \cojud \ret V : \typeA}\ = \eta \comp f}
+    {\sem{\Gamma \vljud V : \typeA}\ = f} \hspace{1cm}
+    \infer{\sem{\Gamma \cojud x \leftarrow M \pcomp N : \typeB} = g^\star \comp f}
+    {\sem{\Gamma \cojud M : \typeA} = f \qquad \sem{x:\typeA \cojud N : \typeB} = g}
+  \end{flalign*}
+  \begin{flalign*}
+     \infer[]{\sem{\Gamma \cojud V \, U : \typeB}\ = \mathrm{app} \comp \pv{f,g}}
+     {\sem{\Gamma \vljud  V : \typeA \to \typeB}\ = f \quad
+     \sem{\Gamma \vljud  U : \typeA}\ = g} \\[2.5ex]
+     \infer{\sem{\Gamma \cojud \sigma(M_1, \dots M_n)}\ = \sem{\sigma}_{\sem{\typeA}}
+     \comp \pv{f_1,\dots,f_n}}{(\sigma, n) \in \Sigma \qquad \forall i
+     \leq n . \> \sem{\Gamma \cojud M_i : \typeA} = f_i}
+  \end{flalign*}
+\end{slide}
 %
 %\begin{slide}{Exercise}
 %  Use the interpretation rules to prove that
